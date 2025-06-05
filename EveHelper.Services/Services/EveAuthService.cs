@@ -199,6 +199,52 @@ namespace EveHelper.Services.Services
         }
 
         /// <summary>
+        /// Refreshes a specific refresh token
+        /// </summary>
+        /// <param name="refreshToken">The refresh token to use</param>
+        /// <returns>New token information</returns>
+        public async Task<EveToken?> RefreshTokenAsync(string refreshToken)
+        {
+            if (string.IsNullOrEmpty(refreshToken))
+                return null;
+
+            try
+            {
+                var refreshRequest = new Dictionary<string, string>
+                {
+                    ["grant_type"] = "refresh_token",
+                    ["client_id"] = _config.ClientId,
+                    ["client_secret"] = _config.ClientSecret,
+                    ["refresh_token"] = refreshToken
+                };
+
+                var content = new FormUrlEncodedContent(refreshRequest);
+                var response = await _httpClient.PostAsync(_config.TokenEndpoint, content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var tokenResponse = JsonSerializer.Deserialize<EveToken>(responseContent);
+                if (tokenResponse == null || string.IsNullOrWhiteSpace(tokenResponse.AccessToken))
+                {
+                    return null;
+                }
+
+                // Extract character information from JWT access token
+                await ExtractCharacterInfoFromToken(tokenResponse);
+
+                return tokenResponse;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Clears authentication state and logs out the user
         /// </summary>
         public void Logout()

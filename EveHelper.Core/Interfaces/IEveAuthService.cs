@@ -45,6 +45,13 @@ namespace EveHelper.Core.Interfaces
         Task<EveToken> RefreshTokenAsync();
 
         /// <summary>
+        /// Refreshes a specific refresh token
+        /// </summary>
+        /// <param name="refreshToken">The refresh token to use</param>
+        /// <returns>New token information</returns>
+        Task<EveToken?> RefreshTokenAsync(string refreshToken);
+
+        /// <summary>
         /// Clears authentication state and logs out the user
         /// </summary>
         void Logout();
