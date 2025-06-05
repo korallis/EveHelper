@@ -1,0 +1,313 @@
+<UserControl x:Class="EveHelper.App.Views.CharacterSelectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:EveHelper.App.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+        
+        <!-- Character Card Style -->
+        <Style x:Key="CharacterCardStyle" TargetType="materialDesign:Card">
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp2"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <materialDesign:Card Grid.Row="0" Margin="16,16,16,8" Padding="24,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Character Selection" 
+                               Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                               Foreground="{DynamicResource MaterialDesignBody}"/>
+                    <TextBlock Text="Manage your EVE Online characters and select your active character"
+                               Style="{StaticResource MaterialDesignBody2TextBlock}"
+                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Command="{Binding AddCharacterCommand}"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        materialDesign:ButtonAssist.CornerRadius="20"
+                        Height="40"
+                        Padding="16,0">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock Text="Add Character" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Character List -->
+        <ScrollViewer Grid.Row="1" Margin="16,0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Characters}" 
+                          Visibility="{Binding HasCharacters, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Style="{StaticResource CharacterCardStyle}">
+                            <materialDesign:Card.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick" 
+                                              Command="{Binding DataContext.SelectCharacterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                              CommandParameter="{Binding}"/>
+                            </materialDesign:Card.InputBindings>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Character Portrait -->
+                                <Border Grid.Column="0" 
+                                        Width="64" Height="64" 
+                                        CornerRadius="32"
+                                        Margin="0,0,16,0">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="{Binding PortraitUrl128}" Stretch="UniformToFill"/>
+                                    </Border.Background>
+                                    
+                                    <!-- Default Character Indicator -->
+                                    <Border Background="{DynamicResource PrimaryHueMidBrush}"
+                                            CornerRadius="12"
+                                            Width="24" Height="24"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Margin="0,0,-4,-4"
+                                            Visibility="{Binding IsDefault, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <materialDesign:PackIcon Kind="Star" 
+                                                                 Foreground="White" 
+                                                                 Width="16" Height="16"
+                                                                 HorizontalAlignment="Center"
+                                                                 VerticalAlignment="Center"/>
+                                    </Border>
+                                </Border>
+
+                                <!-- Character Information -->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}" 
+                                               Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                               FontWeight="Medium"/>
+                                    
+                                    <TextBlock Text="{Binding CorporationName}" 
+                                               Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                               Margin="0,2,0,0"/>
+                                    
+                                    <TextBlock Text="{Binding AllianceName}" 
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                               Margin="0,2,0,0"
+                                               Visibility="{Binding AllianceName, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    
+                                    <!-- Token Status -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                        <materialDesign:PackIcon Kind="CheckCircle" 
+                                                                 Width="16" Height="16"
+                                                                 Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                                                                 VerticalAlignment="Center"
+                                                                 Visibility="{Binding HasValidToken, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <materialDesign:PackIcon Kind="AlertCircle" 
+                                                                 Width="16" Height="16"
+                                                                 Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                                                                 VerticalAlignment="Center"
+                                                                 Visibility="{Binding HasValidToken, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                        <TextBlock Text="Token Valid" 
+                                                   Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                                   Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                                                   Margin="4,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   Visibility="{Binding HasValidToken, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBlock Text="Token Invalid" 
+                                                   Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                                   Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                                                   Margin="4,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   Visibility="{Binding HasValidToken, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Selection Indicator -->
+                                <RadioButton Grid.Column="2"
+                                             IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                             Style="{StaticResource MaterialDesignRadioButton}"
+                                             VerticalAlignment="Center"/>
+                            </Grid>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- No Characters Message -->
+        <StackPanel Grid.Row="1" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Visibility="{Binding HasCharacters, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+            <materialDesign:PackIcon Kind="AccountMultiple" 
+                                     Width="64" Height="64"
+                                     Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                     HorizontalAlignment="Center"/>
+            <TextBlock Text="No Characters Found" 
+                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       Foreground="{DynamicResource MaterialDesignBodyLight}"
+                       HorizontalAlignment="Center"
+                       Margin="0,16,0,8"/>
+            <TextBlock Text="Add your first EVE Online character to get started" 
+                       Style="{StaticResource MaterialDesignBody2TextBlock}"
+                       Foreground="{DynamicResource MaterialDesignBodyLight}"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Action Buttons -->
+        <materialDesign:Card Grid.Row="2" Margin="16,8,16,8" Padding="16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Selected Character Info -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Selected: " 
+                               Style="{StaticResource MaterialDesignBody2TextBlock}"
+                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding SelectedCharacter.Name}" 
+                               Style="{StaticResource MaterialDesignBody2TextBlock}"
+                               FontWeight="Medium"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Action Buttons -->
+                <Button Grid.Column="1"
+                        Command="{Binding SetAsDefaultCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Margin="8,0,0,0"
+                        Content="Set as Default"/>
+
+                <Button Grid.Column="2"
+                        Command="{Binding RefreshCharacterCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Margin="8,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Refresh" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="3"
+                        Command="{Binding RefreshAllCharactersCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Margin="8,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="RefreshCircle" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="Refresh All" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="4"
+                        Command="{Binding RemoveCharacterCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                        BorderBrush="{DynamicResource MaterialDesignValidationErrorBrush}"
+                        Margin="8,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="Remove" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Status Bar -->
+        <materialDesign:Card Grid.Row="3" Margin="16,0,16,16" Padding="16,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Loading Indicator -->
+                <ProgressBar Grid.Column="0"
+                             Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Width="20" Height="20"
+                             IsIndeterminate="True"
+                             Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             Margin="0,0,12,0"/>
+
+                <!-- Status Message -->
+                <TextBlock Grid.Column="1"
+                           Text="{Binding StatusMessage}"
+                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                           VerticalAlignment="Center"/>
+
+                <!-- Character Count -->
+                <TextBlock Grid.Column="2"
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           Foreground="{DynamicResource MaterialDesignBodyLight}"
+                           VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} character(s)">
+                            <Binding Path="Characters.Count"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Loading Overlay -->
+        <Border Grid.RowSpan="4"
+                Background="{DynamicResource MaterialDesignPaper}"
+                Opacity="0.8"
+                Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Width="48" Height="48"
+                             IsIndeterminate="True"/>
+                <TextBlock Text="Loading..." 
+                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                           HorizontalAlignment="Center"
+                           Margin="0,16,0,0"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl> 

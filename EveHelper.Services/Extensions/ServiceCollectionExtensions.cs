@@ -71,6 +71,9 @@ namespace EveHelper.Services.Extensions
             // Register the ESI client service
             services.AddScoped<IEsiClientService, EsiClientService>();
             
+            // Register the character service
+            services.AddScoped<ICharacterService, CharacterService>();
+            
             return services;
         }
     }

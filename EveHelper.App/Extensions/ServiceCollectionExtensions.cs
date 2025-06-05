@@ -20,9 +20,11 @@ namespace EveHelper.App.Extensions
             
             // Register ViewModels
             services.AddTransient<HomeViewModel>();
+            services.AddTransient<CharacterSelectionViewModel>();
             
             // Register Views
             services.AddTransient<HomeView>();
+            services.AddTransient<CharacterSelectionView>();
             
             return services;
         }
