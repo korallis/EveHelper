@@ -1,6 +1,6 @@
 # Task ID: 2
 # Title: Implement EVE Online ESI Authentication and Character Data Access
-# Status: in-progress
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: Integrate secure OAuth 2.0 PKCE authentication with EVE Online ESI API to retrieve character information and skills

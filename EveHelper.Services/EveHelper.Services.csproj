@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="CredentialManagement" Version="1.0.2" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.5" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.183">

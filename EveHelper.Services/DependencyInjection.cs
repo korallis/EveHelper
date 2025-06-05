@@ -13,6 +13,7 @@ namespace EveHelper.Services
             services.AddSingleton<IEveAuthService, EveAuthService>();
             services.AddSingleton<ICharacterService, CharacterService>();
             services.AddSingleton<ICharacterDataService, CharacterDataService>();
+            services.AddSingleton<ISdeService, SdeService>();
 
             return services;
         }
