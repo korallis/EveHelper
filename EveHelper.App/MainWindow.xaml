@@ -1,0 +1,199 @@
+﻿<Window x:Class="EveHelper.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="EVE Helper" 
+        Height="600" 
+        Width="1000"
+        WindowState="Maximized"
+        Background="{StaticResource EveBlackBrush}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Top App Bar -->
+        <materialDesign:ColorZone Grid.Row="0" Grid.ColumnSpan="2" 
+                                  Mode="PrimaryDark" 
+                                  Padding="16,8">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Rocket" 
+                                             Height="24" 
+                                             Width="24" 
+                                             VerticalAlignment="Center"
+                                             Foreground="{StaticResource EveOrangeBrush}"/>
+                    <TextBlock Text="EVE Helper" 
+                               VerticalAlignment="Center" 
+                               Margin="8,0,0,0"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource EveGoldBrush}"/>
+                </StackPanel>
+                
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="Settings">
+                        <materialDesign:PackIcon Kind="Settings"/>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="Help">
+                        <materialDesign:PackIcon Kind="Help"/>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:ColorZone>
+
+        <!-- Left Navigation Panel -->
+        <materialDesign:Card Grid.Row="1" Grid.Column="0" 
+                             Background="{StaticResource EveGrayBrush}" 
+                             Margin="8,0,4,8">
+            <StackPanel Margin="16">
+                <TextBlock Text="Navigation" 
+                           Style="{StaticResource EveSubHeaderTextStyle}"
+                           Margin="0,0,0,16"/>
+                
+                <Button Content="Home" 
+                        Style="{StaticResource EveButtonStyle}"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,0,8"
+                        Click="HomeButton_Click"/>
+                
+                <Button Content="Ship Browser" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,0,8"/>
+                
+                <Button Content="Fitting Tool" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,0,8"/>
+                
+                <Button Content="Skill Planner" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,0,8"/>
+                
+                <Button Content="Market Data" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!-- Main Content Area with Navigation Frame -->
+        <materialDesign:Card Grid.Row="1" Grid.Column="1" 
+                             Background="{StaticResource EveBlackBrush}"
+                             Margin="4,0,8,8">
+            <Grid>
+                <!-- Frame for navigation -->
+                <Frame x:Name="MainContentFrame" 
+                       NavigationUIVisibility="Hidden"
+                       Background="Transparent"/>
+                
+                <!-- Default content when no navigation has occurred -->
+                <Border x:Name="DefaultContent" Background="Transparent">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24">
+                        <StackPanel>
+                            <!-- Welcome Section -->
+                            <materialDesign:Card Style="{StaticResource EveCardStyle}">
+                                <StackPanel>
+                                    <TextBlock Text="Welcome to EVE Helper" 
+                                               Style="{StaticResource EveHeaderTextStyle}"/>
+                                    <TextBlock Text="Your intelligent ship fitting companion" 
+                                               Style="{StaticResource EveSubHeaderTextStyle}"/>
+                                    <TextBlock Text="Get started by clicking the Home button to see the interactive home page with MVVM navigation."
+                                               TextWrapping="Wrap"
+                                               Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </materialDesign:Card>
+
+                            <!-- Features -->
+                            <materialDesign:Card Style="{StaticResource EveCardStyle}">
+                                <StackPanel>
+                                    <TextBlock Text="Features" 
+                                               Style="{StaticResource EveSubHeaderTextStyle}"/>
+                                    
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                                            <materialDesign:Chip Content="Ship Database" 
+                                                                 Icon="Database" 
+                                                                 Margin="0,4"/>
+                                            <materialDesign:Chip Content="Optimal Fittings" 
+                                                                 Icon="Wrench" 
+                                                                 Margin="0,4"/>
+                                            <materialDesign:Chip Content="Skill Analysis" 
+                                                                 Icon="School" 
+                                                                 Margin="0,4"/>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Grid.Column="1" Margin="16,0,0,0">
+                                            <materialDesign:Chip Content="Material Design UI" 
+                                                                 Icon="Palette" 
+                                                                 Margin="0,4"/>
+                                            <materialDesign:Chip Content="MVVM Architecture" 
+                                                                 Icon="Code" 
+                                                                 Margin="0,4"/>
+                                            <materialDesign:Chip Content="Navigation System" 
+                                                                 Icon="Navigation" 
+                                                                 Margin="0,4"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </materialDesign:Card>
+
+                            <!-- Theme Demo -->
+                            <materialDesign:Card Style="{StaticResource EveCardStyle}">
+                                <StackPanel>
+                                    <TextBlock Text="EVE Online Theme" 
+                                               Style="{StaticResource EveSubHeaderTextStyle}"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <Button Content="Primary" 
+                                                Style="{StaticResource EveButtonStyle}"/>
+                                        <Button Content="Secondary" 
+                                                Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Status Bar -->
+        <materialDesign:ColorZone Grid.Row="2" Grid.ColumnSpan="2" 
+                                  Mode="PrimaryDark" 
+                                  Padding="16,4">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Left" 
+                           Text="Ready" 
+                           VerticalAlignment="Center"/>
+                <TextBlock DockPanel.Dock="Right" 
+                           Text="v1.0.0" 
+                           VerticalAlignment="Center"/>
+            </DockPanel>
+        </materialDesign:ColorZone>
+    </Grid>
+</Window>

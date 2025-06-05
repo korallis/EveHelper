@@ -1,0 +1,43 @@
+# Task ID: 6
+# Title: Create Visual Fitting Interface with Drag-and-Drop
+# Status: pending
+# Dependencies: 4, 5
+# Priority: medium
+# Description: Build intuitive WPF fitting interface with visual ship layout, module placement, and real-time compatibility checking
+# Details:
+Design visual ship fitting interface showing high/mid/low/rig slots with drag-and-drop module placement. Implement real-time compatibility validation showing CPU/Power usage, skill requirements, and slot restrictions. Create module browser with filtering by slot type and compatibility. Add visual indicators for fitting issues (red for errors, yellow for warnings). Display real-time statistics panel updating as modules change. Include contextual tooltips explaining errors and module effects. Support undo/redo functionality for fitting changes.
+
+# Test Strategy:
+Test drag-and-drop works smoothly, compatibility checking prevents invalid placements, visual indicators clearly show fitting status, statistics update in real-time, and error messages provide helpful guidance to users.
+
+# Subtasks:
+## 1. Design Visual Ship Layout Component [pending]
+### Dependencies: None
+### Description: Create the visual representation of ship with high/mid/low/rig slots
+### Details:
+Develop a WPF component that visually represents the ship's fitting layout with clearly defined high, mid, low and rig slots. Include visual indicators for each slot type and ensure the layout is responsive to different window sizes. Design should match EVE Online's aesthetic while maintaining usability.
+
+## 2. Implement Drag-and-Drop Module Placement [pending]
+### Dependencies: 6.1
+### Description: Create drag-and-drop functionality for placing modules in appropriate slots
+### Details:
+Implement WPF drag-and-drop system allowing modules to be dragged from the module browser and dropped into compatible ship slots. Include visual feedback during drag operations (highlighting valid drop targets). Handle edge cases like dragging between slots and removing modules by dragging off the fitting area.
+
+## 3. Develop Real-time Compatibility Validation System [pending]
+### Dependencies: 6.2
+### Description: Create system to validate module compatibility and display CPU/Power usage and requirements
+### Details:
+Implement validation logic that checks module compatibility in real-time as modules are placed. Track and display CPU/Power grid usage, skill requirements, and slot restrictions. Create event system to trigger validation checks whenever the fitting changes. Implement data structures to efficiently store and update fitting state.
+
+## 4. Create Module Browser with Filtering [pending]
+### Dependencies: None
+### Description: Build a searchable and filterable module browser component
+### Details:
+Develop a module browser panel that displays available modules with filtering options by slot type, meta level, and compatibility with current ship. Implement search functionality allowing users to find modules by name or attributes. Include module icons and basic information in the browser view with ability to sort by different properties.
+
+## 5. Implement Visual Indicators and Undo/Redo System [pending]
+### Dependencies: 6.2, 6.3
+### Description: Add visual indicators for fitting issues and implement undo/redo functionality
+### Details:
+Create visual indicators (red for errors, yellow for warnings) that highlight fitting issues. Implement contextual tooltips that explain errors and module effects when hovering. Develop a command pattern-based undo/redo system that tracks fitting changes and allows users to revert or reapply changes. Create UI controls for undo/redo operations and keyboard shortcuts.
+

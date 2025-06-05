@@ -1,0 +1,43 @@
+# Task ID: 10
+# Title: Integrate Market Data and Cost Analysis
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Add real-time market price integration showing fitting costs and affordability analysis
+# Details:
+Implement market data service using ESI market endpoints for real-time pricing. Cache market data with intelligent refresh based on ESI cache headers. Display module and ship prices in fitting interface with total cost calculations. Show price comparisons across major trade hubs (Jita, Amarr, Dodixie, Rens). Integrate character wallet data to show affordability indicators. Add price history and trend analysis for expensive items. Include cost-effectiveness analysis comparing fitting performance to total cost.
+
+# Test Strategy:
+Verify market prices match in-game values, cost calculations include all fitting components, affordability indicators work with character wallet data, and price comparisons show meaningful regional differences.
+
+# Subtasks:
+## 1. Implement ESI Market Data Service [pending]
+### Dependencies: None
+### Description: Create a service to fetch real-time market data from EVE Swagger Interface (ESI) endpoints for items used in ship fittings.
+### Details:
+Develop a service class that handles API calls to ESI market endpoints. Implement methods to fetch market orders for specific item types, with parameters for region and order type (buy/sell). Include error handling for API failures and rate limiting compliance. Create data models to represent market orders and prices. Add utility functions to find minimum sell and maximum buy prices for items.
+
+## 2. Build Intelligent Market Data Caching System [pending]
+### Dependencies: 10.1
+### Description: Implement a caching layer for market data that respects ESI cache headers and intelligently refreshes based on market volatility.
+### Details:
+Create a caching service that stores fetched market data with expiration based on ESI cache headers. Implement tiered caching with memory cache for frequent lookups and persistent storage for longer retention. Add logic to determine refresh frequency based on item type volatility (more frequent for commonly traded items). Include cache invalidation triggers for major market events. Implement background refresh for frequently accessed items to prevent cache misses during user sessions.
+
+## 3. Integrate Price Display in Fitting Interface [pending]
+### Dependencies: 10.2
+### Description: Add price information to the fitting interface showing individual module costs and total fitting cost.
+### Details:
+Extend the fitting UI components to display price information for each module, ship hull, and other components. Create a price summary panel showing itemized costs and total fitting cost. Implement price formatting with appropriate ISK units (millions/billions). Add visual indicators for expensive items. Update price displays when fitting changes occur. Include a refresh button to manually update prices when needed.
+
+## 4. Develop Regional Price Comparison System [pending]
+### Dependencies: 10.2
+### Description: Implement functionality to compare prices across major trade hubs (Jita, Amarr, Dodixie, Rens) and display the best locations to purchase fitting components.
+### Details:
+Create a trade hub comparison component that fetches and displays prices for the same items across different regions. Implement a best-price finder algorithm that considers both item price and travel distance. Add a visual comparison table showing price differences between hubs. Include filters to focus on specific item categories or price thresholds. Create a shopping list feature that organizes purchases by optimal location.
+
+## 5. Create Cost-Effectiveness Analysis Tools [pending]
+### Dependencies: 10.3, 10.4
+### Description: Develop analysis features that compare fitting performance metrics to total cost, showing value propositions and alternatives.
+### Details:
+Implement algorithms to calculate performance-to-cost ratios for key ship attributes (DPS, tank, speed, etc.). Create visualization components showing cost-effectiveness compared to similar fittings. Add suggestions for alternative modules that offer better value. Integrate with wallet data (if available) to show affordability indicators. Develop price history tracking to show trends for expensive components. Include export functionality for cost analysis reports.
+

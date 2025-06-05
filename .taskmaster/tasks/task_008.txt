@@ -1,0 +1,43 @@
+# Task ID: 8
+# Title: Add Activity-Specific Fitting Customization
+# Status: pending
+# Dependencies: 7
+# Priority: medium
+# Description: Implement activity-based fitting optimization for PvP, PvE, mining, and hauling with specialized parameters
+# Details:
+Create activity selection interface with categories: PvP (solo, small gang, fleet), PvE (mission types, enemy factions), Mining (ore types, security levels), Hauling (cargo capacity, security). Implement activity-specific optimization parameters modifying base algorithms. Add enemy damage type analysis for PvE optimization, range and engagement profile considerations for PvP, yield optimization for mining, and cargo/tank balance for hauling. Create activity-specific module recommendations and warnings.
+
+# Test Strategy:
+Test activity selection produces appropriately specialized fittings, PvE fittings handle specified enemy types effectively, PvP fittings match engagement profiles, mining fittings optimize for selected activities, and recommendations include relevant warnings.
+
+# Subtasks:
+## 1. Create Activity Selection Interface [pending]
+### Dependencies: None
+### Description: Develop a user interface component that allows users to select their intended ship activity from categories including PvP, PvE, Mining, and Hauling, with relevant subcategories for each.
+### Details:
+Implement a hierarchical selection component with main categories (PvP, PvE, Mining, Hauling) and subcategories for each (e.g., PvP: solo, small gang, fleet; PvE: mission types, enemy factions). Use radio buttons or dropdown selectors for main categories and checkboxes for subcategories where multiple selections are valid. Store the selected activity configuration in the application state to be used by the fitting algorithm.
+
+## 2. Implement PvP Optimization Parameters [pending]
+### Dependencies: 8.1
+### Description: Create specialized fitting parameters for PvP activities that consider engagement range, fleet composition, and target profile.
+### Details:
+Extend the base fitting algorithm to incorporate PvP-specific parameters: engagement range preferences (brawling, kiting), target profile (size, expected resistances), and role in fleet (tackle, DPS, support). Implement weighting factors that prioritize appropriate modules based on the selected PvP subcategory. For solo PvP, emphasize balanced fitting with survival capabilities; for small gang, focus on specialized roles; for fleet operations, optimize for fleet doctrine compatibility.
+
+## 3. Develop PvE Enemy Analysis System [pending]
+### Dependencies: 8.1
+### Description: Build a system that analyzes enemy NPC factions and mission types to recommend optimal damage types and defensive priorities.
+### Details:
+Create a database of enemy NPC factions with their damage profiles and resistance patterns. Implement logic that, based on the selected PvE activity (mission type, enemy faction), recommends optimal damage types to deal and resistances to prioritize. Include considerations for mission-specific requirements like target range, NPC behavior patterns, and special mission conditions. Integrate with the fitting algorithm to adjust module recommendations based on this analysis.
+
+## 4. Create Mining and Hauling Specialization Logic [pending]
+### Dependencies: 8.1
+### Description: Implement specialized optimization parameters for mining and hauling activities that consider ore types, security levels, cargo capacity, and risk assessment.
+### Details:
+For mining activities, develop logic that optimizes for yield based on selected ore types and security levels, balancing mining laser types, survey equipment, and defensive capabilities. For hauling, implement algorithms that optimize cargo capacity while maintaining appropriate tank for the selected security level routes. Include specialized module recommendations like cargo expanders, inertial stabilizers, and warp core stabilizers based on risk profile. Create logic for calculating optimal cargo/tank balance based on cargo value and security risk.
+
+## 5. Implement Activity-Specific Recommendation Engine [pending]
+### Dependencies: 8.1, 8.2, 8.3, 8.4
+### Description: Create a recommendation system that provides activity-specific module suggestions, warnings, and fitting advice based on the selected activity and ship characteristics.
+### Details:
+Develop a recommendation engine that integrates data from all activity-specific parameters to generate tailored fitting suggestions. Implement warning systems that flag potential issues with fits based on activity requirements (e.g., insufficient tank for selected security level, inappropriate weapon systems for target profile). Create an explanation component that provides rationale for recommendations to educate users on fitting principles. Include alternative module suggestions when optimal choices may be unavailable or too expensive.
+

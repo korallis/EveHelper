@@ -1,0 +1,43 @@
+# Task ID: 3
+# Title: Integrate EVE Static Data Export (SDE) and Local Caching System
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Download, parse, and cache EVE Online SDE data for ships, modules, skills, and game mechanics with offline capability
+# Details:
+Download latest SDE from CCP's official sources, parse YAML/SQLite data into local LiteDB database. Create data models for ships, modules, skills, types, groups, and categories. Implement caching service with automatic update checking, version management, and incremental updates. Build ship data service exposing ship attributes, slot layouts, bonuses, and skill requirements. Create module service for compatibility checking and attribute lookups. Ensure complete offline functionality once initial cache is populated.
+
+# Test Strategy:
+Verify SDE data downloads and parses correctly, local cache provides accurate ship and module information matching official game data, offline functionality works without internet connection, and cache updates handle version changes properly.
+
+# Subtasks:
+## 1. Implement SDE Download and Version Management System [pending]
+### Dependencies: None
+### Description: Create a system to automatically download the latest EVE SDE from CCP's official sources and manage version tracking
+### Details:
+Build a service that checks for new SDE releases, downloads the latest version, verifies file integrity with checksums, tracks version history in a local database, and implements a notification system for new versions. Include functionality to compare local version against latest available version.
+
+## 2. Develop YAML/SQLite Parsing Engine [pending]
+### Dependencies: 3.1
+### Description: Create a robust parsing system to extract and transform SDE data from YAML files and SQLite databases
+### Details:
+Build parsers for both YAML and SQLite formats that can handle the complex nested structure of EVE SDE data. Implement error handling for malformed data, logging for parsing operations, and optimization for large file processing. Create a unified interface that standardizes data access regardless of source format.
+
+## 3. Design and Implement Data Models [pending]
+### Dependencies: 3.2
+### Description: Create comprehensive data models for ships, modules, skills, types, groups, and categories
+### Details:
+Design class structures that accurately represent EVE Online game entities with proper relationships and inheritance. Include properties for all relevant attributes such as slot layouts, bonuses, skill requirements, fitting constraints, and metadata. Ensure models support serialization for caching and include validation logic for data integrity.
+
+## 4. Implement LiteDB Caching System with Incremental Updates [pending]
+### Dependencies: 3.3
+### Description: Build a local caching system using LiteDB with support for incremental updates
+### Details:
+Create a caching service that stores parsed SDE data in a LiteDB database. Implement CRUD operations for all entity types, indexing for performance optimization, and data compression where appropriate. Design an incremental update mechanism that can apply partial updates to the cache without requiring a full refresh. Include cache validation and repair functionality.
+
+## 5. Create Data Service Layer with Offline Functionality [pending]
+### Dependencies: 3.4
+### Description: Develop service interfaces for accessing ship, module, and skill data with complete offline support
+### Details:
+Build service classes that expose methods for querying and filtering ships, modules, skills and other game entities. Implement specialized methods for compatibility checking between modules and ships, attribute calculations, and skill requirement validation. Ensure all services can function without internet connectivity once the cache is populated. Include data synchronization logic to handle transitions between online and offline states.
+

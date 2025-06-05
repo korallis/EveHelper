@@ -1,0 +1,43 @@
+# Task ID: 9
+# Title: Build Skill Analysis and Training Plan System
+# Status: pending
+# Dependencies: 7
+# Priority: medium
+# Description: Create skill gap analysis and optimized training plan generation for improving fitting effectiveness
+# Details:
+Implement skill gap analysis comparing current character skills to optimal fitting requirements. Create training plan generator using shortest-path algorithms considering skill prerequisites and training times. Generate multiple plan options: minimum requirements vs optimal performance. Show training time estimates, milestone achievements, and fitting improvement progression. Integrate with ESI skill queue data for plan comparison. Include skill priority recommendations based on effectiveness gains per training time invested.
+
+# Test Strategy:
+Verify skill gap analysis accurately identifies missing skills, training plans respect prerequisites and minimize total time, time estimates match game calculations, and recommendations prioritize high-impact skills appropriately.
+
+# Subtasks:
+## 1. Implement Skill Gap Analysis Engine [pending]
+### Dependencies: None
+### Description: Create a system that compares a character's current skills to the optimal skills required for a specific ship fitting and identifies the gaps.
+### Details:
+Build a service that takes a character's current skill levels (from ESI or database) and a ship fitting as inputs. Compare each skill required by the fitting with the character's current level. Calculate effectiveness penalties for each skill gap. Output a structured report of missing skills, current vs. required levels, and impact on fitting performance. Include categorization of skills by importance (critical vs. optimization).
+
+## 2. Develop Skill Prerequisite Graph and Resolver [pending]
+### Dependencies: None
+### Description: Create a data structure and resolver that represents EVE's skill prerequisite relationships and can determine all prerequisites for any given skill.
+### Details:
+Implement a directed graph representation of skill prerequisites. Each node should contain skill ID, name, rank, and primary/secondary attributes. Edges represent prerequisite relationships with required levels. Create methods to: 1) Find all prerequisites for a given skill, 2) Determine if a character meets prerequisites, 3) Calculate the full prerequisite chain for multiple target skills while eliminating duplicates. Cache the graph structure for performance.
+
+## 3. Build Training Time Estimation System [pending]
+### Dependencies: None
+### Description: Create a system that accurately calculates training times for skills based on character attributes, implants, and current skill levels.
+### Details:
+Implement the EVE skill training time formula accounting for character attributes, skill rank, and current/target skill levels. Include support for attribute enhancers (implants). Create functions to calculate: 1) Time for a single skill level, 2) Cumulative time for multiple skills, 3) Training time with and without attribute optimization. Provide both point-in-time estimates and calendar-based completion dates accounting for partially trained skills.
+
+## 4. Implement Training Plan Generation Algorithm [pending]
+### Dependencies: None
+### Description: Create an algorithm that generates optimal training plans based on skill gaps, prerequisites, and training times.
+### Details:
+Implement a modified shortest-path algorithm that considers skill prerequisites, training times, and effectiveness gains. Generate multiple plan options: 1) Minimum viable plan (fastest to basic effectiveness), 2) Optimal performance plan (complete skill coverage), 3) Balanced approach with intermediate milestones. Sort skills by training efficiency (effectiveness gain per training time). Handle special cases like partially trained skills and skills already in queue. Output a structured training plan with ordered skill sequence, estimated completion times, and effectiveness milestones.
+
+## 5. Integrate with ESI Skill Queue and Build UI Components [pending]
+### Dependencies: None
+### Description: Connect to EVE ESI to retrieve and compare current skill queue with generated plans, and create UI components to display analysis and plans.
+### Details:
+Implement ESI client to fetch character's current skill queue. Create comparison logic between current queue and generated optimal plans. Build UI components for: 1) Skill gap visualization with color-coded importance, 2) Training plan display with timeline and milestones, 3) Interactive plan adjustment tools, 4) Effectiveness progression chart showing fitting improvement over time. Include options to export plans to EVEMon format. Add priority recommendations highlighting skills with highest effectiveness gain per training time.
+

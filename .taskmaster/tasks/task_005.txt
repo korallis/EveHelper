@@ -1,0 +1,43 @@
+# Task ID: 5
+# Title: Develop Fitting Statistics Calculation Engine
+# Status: pending
+# Dependencies: 3
+# Priority: high
+# Description: Implement accurate EVE Online fitting calculations including DPS, tank, capacitor, and resource usage with skill bonuses
+# Details:
+Create calculation engine implementing EVE Online formulas for: DPS calculations with weapon systems and drones, effective HP with resistances and armor/shield, capacitor stability and recharge rates, CPU/Power Grid usage, speed and agility calculations. Account for character skills, ship bonuses, module effects, and stacking penalties. Implement real-time calculation updates as fittings change. Create validation system ensuring calculations match in-game values. Handle edge cases like overloaded modules and implant effects.
+
+# Test Strategy:
+Validate calculations against known benchmark fittings, compare results with existing tools like Pyfa, test edge cases with complex module interactions, verify stacking penalties apply correctly, and confirm skill bonuses calculate accurately.
+
+# Subtasks:
+## 1. Implement Weapon DPS Calculation System [pending]
+### Dependencies: None
+### Description: Create a module that calculates damage per second for all weapon systems including turrets, missiles, and drones with skill bonuses
+### Details:
+Implement formulas for turret damage (tracking, falloff, optimal range), missile damage (explosion velocity, explosion radius), and drone damage. Account for damage types (EM, thermal, kinetic, explosive), rate of fire modifiers, damage modifiers from skills and modules. Include calculations for weapon signature resolution against target signature radius. Handle special cases like smartbombs and remote repair systems.
+
+## 2. Develop Effective HP and Resistance Calculations [pending]
+### Dependencies: None
+### Description: Build a system to calculate effective hit points across shield, armor, and hull with resistance profiles
+### Details:
+Implement formulas for raw and effective HP calculations including base values and module bonuses. Calculate resistance profiles for all damage types across shield, armor, and hull. Account for active tanking modules (shield boosters, armor repairers) and their repair amounts per cycle. Include passive regeneration rates for shields. Handle stacking penalties for resistance modules and factor in ship bonuses from skills.
+
+## 3. Create Capacitor Stability and Recharge Engine [pending]
+### Dependencies: None
+### Description: Develop a system to calculate capacitor stability, peak recharge, and time-to-depletion with module usage
+### Details:
+Implement capacitor recharge curve formulas including base and modified values. Calculate capacitor usage for all active modules with their cycle times and activation costs. Determine capacitor stability percentage and time to depletion under various module activation scenarios. Account for capacitor boosters, batteries, and flux coils. Include skill and implant effects on capacitor capacity and recharge rate.
+
+## 4. Build CPU and PowerGrid Resource Management System [pending]
+### Dependencies: None
+### Description: Create a system to track and validate CPU and PowerGrid usage against ship resources with fitting modifications
+### Details:
+Implement resource tracking for CPU and PowerGrid usage of all modules. Calculate base and modified resource values based on ship type. Apply skill modifiers from relevant fitting skills (Power Grid Management, CPU Management, etc.). Handle resource modification modules like Reactor Control Units and Co-Processors. Implement validation to detect when fittings exceed available resources. Account for rig penalties and calibration usage.
+
+## 5. Implement Ship Performance Calculations [pending]
+### Dependencies: 5.1, 5.2, 5.3, 5.4
+### Description: Develop calculations for ship speed, agility, align time, and signature radius with module effects
+### Details:
+Implement formulas for base and modified ship velocity including afterburners and microwarpdrives. Calculate ship agility, align time, and turning radius. Determine signature radius with modifiers from modules and skills. Account for mass changes from modules and cargo. Calculate warp speed and acceleration. Include calculations for tracking speed and scan resolution. Factor in skill bonuses for navigation and electronic systems.
+

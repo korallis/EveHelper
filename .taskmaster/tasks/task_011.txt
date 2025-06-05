@@ -1,0 +1,11 @@
+# Task ID: 11
+# Title: Implement Fitting Management and Export System
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Create comprehensive fitting save/load system with import/export capabilities in standard EVE formats
+# Details:
+Implement fitting CRUD operations with LiteDB persistence. Support import/export in EFT format, EVE COPY format, and custom JSON. Create fitting organization system with folders, tags, and favorites. Add fitting search and filtering within saved collections. Implement fitting sharing capabilities and version history. Include backup/restore functionality for user data protection. Support batch operations for managing large fitting collections.
+
+# Test Strategy:
+Test fitting save/load preserves all data accurately, import/export works with standard EVE formats, organization features help manage large collections, sharing functionality works reliably, and backup/restore protects against data loss.

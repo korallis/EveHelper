@@ -1,0 +1,746 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Setup Project Architecture and Foundation",
+      "description": "Create the multi-layered WPF application structure with proper separation of concerns following the specified architecture",
+      "details": "Create solution with four projects: EveHelper.App (WPF UI), EveHelper.Services (Business Logic), EveHelper.Core (Models & Interfaces), EveHelper.Data (Data Access). Setup dependency injection container, configure MaterialDesignInXAML for modern UI styling, implement MVVM pattern with ViewModels and Views, and establish navigation services. Include NuGet packages: MaterialDesignThemes, Microsoft.Extensions.DependencyInjection, LiteDB for local storage.",
+      "testStrategy": "Verify project builds successfully, all layers can communicate through dependency injection, MaterialDesign themes load correctly, and basic navigation between views works without errors.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "done",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Create Solution Structure with Four Projects",
+          "description": "Set up the Visual Studio solution with the four specified projects and establish proper references between them",
+          "dependencies": [],
+          "details": "Create a new Visual Studio solution named 'EveHelper'. Add four projects: EveHelper.App (WPF), EveHelper.Services (Class Library), EveHelper.Core (Class Library), and EveHelper.Data (Class Library). Set up project references: App references Services and Core; Services references Core and Data; Data references Core. Create basic folder structure in each project (Models, Interfaces, ViewModels, Views, etc. as appropriate).\n<info added on 2025-06-05T12:29:32.387Z>\nSuccessfully created solution structure: EveHelper.sln with 4 projects (App-WPF, Services, Core, Data), proper references (App->Services+Core, Services->Core+Data, Data->Core), folder structure in each project, and verified successful build with no errors. Foundation architecture is ready for next subtask.\n</info added on 2025-06-05T12:29:32.387Z>",
+          "status": "done",
+          "testStrategy": "Verify solution builds successfully with no errors. Confirm all project references are correctly established."
+        },
+        {
+          "id": 2,
+          "title": "Install and Configure NuGet Packages",
+          "description": "Add all required NuGet packages to the appropriate projects and ensure compatibility",
+          "dependencies": [
+            1
+          ],
+          "details": "Install MaterialDesignThemes to EveHelper.App; Microsoft.Extensions.DependencyInjection to EveHelper.App and EveHelper.Services; LiteDB to EveHelper.Data. Add any additional supporting packages like Microsoft.Extensions.DependencyInjection.Abstractions to Core. Create a packages.config or use PackageReference format depending on project SDK. Verify package versions are compatible.\n<info added on 2025-06-05T12:31:09.941Z>\nPackage installation completed successfully. All NuGet packages installed with compatible versions: MaterialDesignThemes v5.2.1 (App), Microsoft.Extensions.DependencyInjection v9.0.5 (App, Services), LiteDB v5.0.21 (Data), and Microsoft.Extensions.DependencyInjection.Abstractions v9.0.5 (Core). Solution builds without errors or warnings.\n</info added on 2025-06-05T12:31:09.941Z>",
+          "status": "done",
+          "testStrategy": "Build solution to verify no package conflicts. Create a simple test that references a class from each package to ensure they're properly imported."
+        },
+        {
+          "id": 3,
+          "title": "Implement Dependency Injection Container",
+          "description": "Set up the DI container and register all services and repositories",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "Create ServiceCollection extension methods in each project to register their services. In EveHelper.App, create a Startup.cs class that configures the ServiceCollection and builds the ServiceProvider. Register all services with appropriate lifetimes (Singleton, Scoped, Transient). Create interfaces in Core project for all services. Implement service location in App.xaml.cs for application-wide access to the DI container.\n<info added on 2025-06-05T12:36:03.048Z>\nSuccessfully completed DI container implementation. ServiceCollection extension methods created in Core, Data, and Services projects for service registration. App.xaml.cs configured with static ServiceProvider and GetService method for application-wide DI access. Basic interfaces (IDataService, INavigationService) implemented in Core project. Solution builds and runs with DI container properly initialized and functional.\n</info added on 2025-06-05T12:36:03.048Z>",
+          "status": "done",
+          "testStrategy": "Write a unit test that builds the container and resolves each registered service to verify proper registration."
+        },
+        {
+          "id": 4,
+          "title": "Configure MaterialDesignInXAML and Basic UI Structure",
+          "description": "Set up the MaterialDesign theme and create the basic UI shell with resource dictionaries",
+          "dependencies": [
+            2
+          ],
+          "details": "In App.xaml, merge the MaterialDesign ResourceDictionaries. Create a custom theme with primary and accent colors. Set up a MainWindow with a basic layout including navigation area and content area. Create resource dictionaries for common styles, templates, and converters. Implement basic controls showcase to verify MaterialDesign is working correctly. Configure dark/light theme switching capability.\n<info added on 2025-06-05T12:39:39.657Z>\nSuccessfully configured MaterialDesignInXAML theme and basic UI structure: Added MaterialDesign resource dictionaries to App.xaml with custom EVE Online color scheme (orange, gold, black, gray). Created CommonStyles.xaml with custom button, card, text, and input styles. Updated MainWindow.xaml with comprehensive layout including top app bar, navigation panel, content area, and status bar. Implemented MaterialDesign components (ColorZone, Card, PackIcon, Chip) with proper theming. Application builds and runs successfully with modern Material Design UI.\n</info added on 2025-06-05T12:39:39.657Z>\n<info added on 2025-06-05T12:39:48.243Z>\nThe user request appears to be describing work that has already been completed and documented in the existing subtask details. The information provided matches what is already recorded in the subtask's details from the previous update on 2025-06-05T12:39:39.657Z. No new information is being provided that would warrant an additional update to the subtask details.\n</info added on 2025-06-05T12:39:48.243Z>",
+          "status": "done",
+          "testStrategy": "Launch the application and visually verify MaterialDesign components render correctly. Test theme switching if implemented."
+        },
+        {
+          "id": 5,
+          "title": "Implement MVVM Pattern and Navigation Service",
+          "description": "Create the MVVM infrastructure and navigation system for the application",
+          "dependencies": [
+            3,
+            4
+          ],
+          "details": "Create a BaseViewModel class in Core with INotifyPropertyChanged implementation. Implement a ViewModelLocator for XAML binding. Create a NavigationService interface in Core and implementation in Services that handles view/viewmodel resolution and navigation. Implement a basic command infrastructure (RelayCommand). Create sample views and viewmodels to test navigation. Set up the main application frame and navigation container in MainWindow.\n<info added on 2025-06-05T12:59:29.938Z>\nMVVM Implementation Complete - Successfully implemented comprehensive MVVM architecture with BaseViewModel, RelayCommand, NavigationService, ViewModelLocator, sample HomeViewModel/HomeView, DI integration, and MainWindow navigation setup. All components working together with Material Design theming. Ready for EVE Online feature implementation.\n</info added on 2025-06-05T12:59:29.938Z>",
+          "status": "done",
+          "testStrategy": "Create a test that navigates between multiple views and verifies the correct viewmodel is instantiated and displayed. Test back navigation and parameter passing if implemented."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Implement EVE Online ESI Authentication and Character Data Access",
+      "description": "Integrate secure OAuth 2.0 PKCE authentication with EVE Online ESI API to retrieve character information and skills",
+      "details": "Implement OAuth 2.0 PKCE flow following EVE Developer Documentation guidelines. Create ESI client service with HttpClient for API calls, secure token storage with automatic refresh, character selection interface for multi-character support. Retrieve character skills, skill queue, and basic character information via ESI endpoints. Handle rate limiting with intelligent request queuing and respect ESI cache headers. Store tokens securely using Windows Credential Manager or encrypted local storage.",
+      "testStrategy": "Test authentication flow with real EVE Online accounts, verify token refresh works automatically, confirm character data retrieval matches in-game information, and validate rate limiting compliance with ESI guidelines.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "in-progress",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement OAuth 2.0 PKCE Authentication Flow",
+          "description": "Create the OAuth 2.0 PKCE authentication flow for EVE Online ESI API following the EVE Developer Documentation guidelines",
+          "dependencies": [],
+          "details": "Generate code verifier and challenge, construct authorization URL with required scopes, implement redirect handler to capture authorization code, exchange code for access and refresh tokens, validate token response, and handle initial token storage\n<info added on 2025-06-05T13:09:33.024Z>\nOAuth 2.0 PKCE Implementation Complete - Successfully implemented comprehensive OAuth 2.0 PKCE authentication flow including: Core Authentication Models (EveAuthConfiguration, EveToken with JWT parsing, PkceData, AuthenticationResult), PKCE Security Implementation (PkceHelper with cryptographically secure code generation, SHA256 code challenge, state parameter for CSRF protection), EVE Authentication Service (complete IEveAuthService implementation, StartAuthenticationAsync, CompleteAuthenticationAsync with validation, RefreshTokenAsync, JWT parsing for character info, comprehensive error handling), OAuth Callback Handler (OAuthCallbackListener with HttpListener, styled success/error pages, automatic browser closure, robust query parsing), Dependency Injection (registered EveAuthService with HttpClient factory, configured default settings, added required NuGet packages), Security Features (CSRF protection, secure PKCE implementation, JWT validation, proper token expiration handling). The OAuth 2.0 PKCE flow is now fully functional and ready for UI integration.\n</info added on 2025-06-05T13:09:33.024Z>",
+          "status": "done",
+          "testStrategy": "Verify successful authentication flow with test account, confirm tokens are received and properly formatted, test error handling for failed authentication attempts"
+        },
+        {
+          "id": 2,
+          "title": "Develop Secure Token Storage and Refresh System",
+          "description": "Create a secure system for storing authentication tokens using Windows Credential Manager or encrypted local storage with automatic refresh capability",
+          "dependencies": [
+            1
+          ],
+          "details": "Implement token encryption/decryption, store tokens securely in Windows Credential Manager or encrypted local storage, create token refresh mechanism that triggers before expiration, handle refresh failures gracefully, implement token revocation on logout",
+          "status": "pending",
+          "testStrategy": "Verify tokens are properly encrypted before storage, test automatic refresh before token expiration, confirm refresh failures are handled appropriately"
+        },
+        {
+          "id": 3,
+          "title": "Build ESI Client Service with HttpClient",
+          "description": "Create a reusable ESI client service using HttpClient for making authenticated API calls to the EVE Online ESI endpoints",
+          "dependencies": [
+            2
+          ],
+          "details": "Implement HttpClient factory with appropriate headers and configuration, create methods for GET/POST/PUT/DELETE requests, add authentication token injection, implement response parsing and error handling, respect ESI cache headers",
+          "status": "pending",
+          "testStrategy": "Test API calls with various endpoints, verify proper handling of different response types, confirm authentication headers are correctly applied"
+        },
+        {
+          "id": 4,
+          "title": "Implement Character Selection Interface",
+          "description": "Create a user interface for selecting and managing multiple EVE Online characters with their associated authentication tokens",
+          "dependencies": [
+            2
+          ],
+          "details": "Design character selection UI component, implement character addition workflow, create character removal functionality, store character-token associations, handle default character selection, display basic character information (name, portrait, corporation)",
+          "status": "pending",
+          "testStrategy": "Test adding multiple characters, verify correct token association per character, confirm character removal properly cleans up associated data"
+        },
+        {
+          "id": 5,
+          "title": "Develop Character Data Retrieval Services",
+          "description": "Create services to retrieve and process character information, skills, and skill queue data from ESI endpoints with rate limiting support",
+          "dependencies": [
+            3,
+            4
+          ],
+          "details": "Implement intelligent request queuing system respecting ESI rate limits, create methods for retrieving character information, skills data, and skill queue, process and transform API responses into application models, implement error handling for failed requests, add caching layer respecting ESI cache headers",
+          "status": "pending",
+          "testStrategy": "Verify character data is correctly retrieved and transformed, test rate limiting under high request volume, confirm proper handling of API errors and cache headers"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Integrate EVE Static Data Export (SDE) and Local Caching System",
+      "description": "Download, parse, and cache EVE Online SDE data for ships, modules, skills, and game mechanics with offline capability",
+      "details": "Download latest SDE from CCP's official sources, parse YAML/SQLite data into local LiteDB database. Create data models for ships, modules, skills, types, groups, and categories. Implement caching service with automatic update checking, version management, and incremental updates. Build ship data service exposing ship attributes, slot layouts, bonuses, and skill requirements. Create module service for compatibility checking and attribute lookups. Ensure complete offline functionality once initial cache is populated.",
+      "testStrategy": "Verify SDE data downloads and parses correctly, local cache provides accurate ship and module information matching official game data, offline functionality works without internet connection, and cache updates handle version changes properly.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement SDE Download and Version Management System",
+          "description": "Create a system to automatically download the latest EVE SDE from CCP's official sources and manage version tracking",
+          "dependencies": [],
+          "details": "Build a service that checks for new SDE releases, downloads the latest version, verifies file integrity with checksums, tracks version history in a local database, and implements a notification system for new versions. Include functionality to compare local version against latest available version.",
+          "status": "pending",
+          "testStrategy": "Verify successful download of SDE files, validate checksum verification, test version comparison logic, and confirm proper handling of download failures or interruptions."
+        },
+        {
+          "id": 2,
+          "title": "Develop YAML/SQLite Parsing Engine",
+          "description": "Create a robust parsing system to extract and transform SDE data from YAML files and SQLite databases",
+          "dependencies": [
+            1
+          ],
+          "details": "Build parsers for both YAML and SQLite formats that can handle the complex nested structure of EVE SDE data. Implement error handling for malformed data, logging for parsing operations, and optimization for large file processing. Create a unified interface that standardizes data access regardless of source format.",
+          "status": "pending",
+          "testStrategy": "Test with sample SDE files to verify correct extraction of ship, module, and skill data. Validate handling of different data types and nested structures. Measure performance with large datasets."
+        },
+        {
+          "id": 3,
+          "title": "Design and Implement Data Models",
+          "description": "Create comprehensive data models for ships, modules, skills, types, groups, and categories",
+          "dependencies": [
+            2
+          ],
+          "details": "Design class structures that accurately represent EVE Online game entities with proper relationships and inheritance. Include properties for all relevant attributes such as slot layouts, bonuses, skill requirements, fitting constraints, and metadata. Ensure models support serialization for caching and include validation logic for data integrity.",
+          "status": "pending",
+          "testStrategy": "Verify models correctly represent game entities by comparing to in-game data. Test serialization/deserialization. Validate relationship mapping between different entity types."
+        },
+        {
+          "id": 4,
+          "title": "Implement LiteDB Caching System with Incremental Updates",
+          "description": "Build a local caching system using LiteDB with support for incremental updates",
+          "dependencies": [
+            3
+          ],
+          "details": "Create a caching service that stores parsed SDE data in a LiteDB database. Implement CRUD operations for all entity types, indexing for performance optimization, and data compression where appropriate. Design an incremental update mechanism that can apply partial updates to the cache without requiring a full refresh. Include cache validation and repair functionality.",
+          "status": "pending",
+          "testStrategy": "Test cache read/write performance, verify data integrity after updates, simulate incremental updates to confirm correct application, and validate cache recovery after corruption."
+        },
+        {
+          "id": 5,
+          "title": "Create Data Service Layer with Offline Functionality",
+          "description": "Develop service interfaces for accessing ship, module, and skill data with complete offline support",
+          "dependencies": [
+            4
+          ],
+          "details": "Build service classes that expose methods for querying and filtering ships, modules, skills and other game entities. Implement specialized methods for compatibility checking between modules and ships, attribute calculations, and skill requirement validation. Ensure all services can function without internet connectivity once the cache is populated. Include data synchronization logic to handle transitions between online and offline states.",
+          "status": "pending",
+          "testStrategy": "Test all service methods with various query parameters, verify correct filtering and sorting, validate module compatibility checks against known good/bad combinations, and confirm full functionality in offline mode."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Build Ship Browser and Search System",
+      "description": "Create comprehensive ship browsing interface with filtering, search, and detailed ship information display",
+      "details": "Implement ship browser with hierarchical navigation by ship class, faction, and role. Add advanced filtering system supporting multiple criteria: ship attributes (speed, cargo, slots), skill requirements, market groups. Create search functionality with auto-complete and fuzzy matching. Display detailed ship information including base stats, slot configurations, skill prerequisites with current character skill validation. Show ship comparison tools for side-by-side evaluation. Integrate ship images from EVE Image Server with lazy loading and caching.",
+      "testStrategy": "Test filtering and search return accurate results, ship details match SDE data, skill requirement validation works with character data, comparison tools show meaningful differences, and images load efficiently with proper fallbacks.",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Hierarchical Ship Navigation UI",
+          "description": "Create a user interface for browsing ships organized by class, faction, and role",
+          "dependencies": [],
+          "details": "Develop a tree-like navigation structure that organizes ships by class (Frigate, Cruiser, etc.), faction (Amarr, Caldari, etc.), and role (Combat, Mining, etc.). Implement collapsible sections for each category. Ensure smooth transitions between navigation levels and maintain state when users navigate back. Include visual indicators for ship counts within each category.",
+          "status": "pending",
+          "testStrategy": "Verify all ships are correctly categorized. Test navigation flow through all hierarchy levels. Ensure UI remains responsive with large datasets. Validate that selected filters persist when navigating between categories."
+        },
+        {
+          "id": 2,
+          "title": "Build Advanced Ship Filtering System",
+          "description": "Create a filtering system supporting multiple criteria including ship attributes, skill requirements, and market groups",
+          "dependencies": [
+            1
+          ],
+          "details": "Implement filter controls for ship attributes (speed, cargo capacity, slot configurations), skill requirements (minimum skills needed), and market groups. Support multiple simultaneous filter criteria with AND/OR logic. Create slider controls for numeric ranges and dropdown/checkbox selectors for categorical filters. Add filter presets for common queries and allow users to save custom filter configurations.",
+          "status": "pending",
+          "testStrategy": "Test filter combinations to ensure correct results. Verify performance with complex filter combinations. Validate that filter state is preserved during navigation. Test edge cases with extreme filter values."
+        },
+        {
+          "id": 3,
+          "title": "Develop Ship Search Functionality",
+          "description": "Implement search with auto-complete suggestions and fuzzy matching capabilities",
+          "dependencies": [
+            1
+          ],
+          "details": "Create a search input field with real-time suggestions as users type. Implement fuzzy matching to handle typos and partial matches. Include search history and popular searches. Support advanced search syntax for power users (e.g., quotation marks for exact matches, minus sign to exclude terms). Highlight matching terms in search results. Optimize search performance for quick response times.",
+          "status": "pending",
+          "testStrategy": "Test search with various inputs including partial terms, misspellings, and case variations. Verify auto-complete suggestions appear promptly. Measure search response times with large datasets. Test advanced search syntax functionality."
+        },
+        {
+          "id": 4,
+          "title": "Create Detailed Ship Information Display",
+          "description": "Design and implement a comprehensive ship details view showing stats, configurations, and skill prerequisites",
+          "dependencies": [
+            1
+          ],
+          "details": "Develop a detailed ship information panel showing base statistics (speed, agility, cargo capacity), slot configurations (high/mid/low slots, rig slots), and skill prerequisites. Compare current character skills against requirements with visual indicators. Include ship bonuses, traits, and role information. Add tabs for different information categories (attributes, fitting, skills, etc.). Implement tooltips for technical terms and attributes.",
+          "status": "pending",
+          "testStrategy": "Verify all ship attributes display correctly. Test with various ship types to ensure all relevant information appears. Validate skill requirement checking against different character profiles. Test responsive layout on different screen sizes."
+        },
+        {
+          "id": 5,
+          "title": "Implement Ship Comparison Tools with Image Integration",
+          "description": "Create side-by-side ship comparison functionality with integrated ship imagery from EVE Image Server",
+          "dependencies": [
+            4
+          ],
+          "details": "Build a comparison interface allowing users to select multiple ships for side-by-side evaluation. Highlight differences between ships with visual cues. Integrate ship images from EVE Image Server with lazy loading for performance and local caching to reduce bandwidth. Implement image fallbacks for unavailable images. Allow users to save comparison results and share via links. Support comparing up to 4 ships simultaneously with responsive layout adjustments.",
+          "status": "pending",
+          "testStrategy": "Test comparison with various ship combinations. Verify image loading, caching, and fallback mechanisms. Test performance with multiple high-resolution images. Validate that comparison highlights differences correctly. Test sharing functionality across different browsers."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Develop Fitting Statistics Calculation Engine",
+      "description": "Implement accurate EVE Online fitting calculations including DPS, tank, capacitor, and resource usage with skill bonuses",
+      "details": "Create calculation engine implementing EVE Online formulas for: DPS calculations with weapon systems and drones, effective HP with resistances and armor/shield, capacitor stability and recharge rates, CPU/Power Grid usage, speed and agility calculations. Account for character skills, ship bonuses, module effects, and stacking penalties. Implement real-time calculation updates as fittings change. Create validation system ensuring calculations match in-game values. Handle edge cases like overloaded modules and implant effects.",
+      "testStrategy": "Validate calculations against known benchmark fittings, compare results with existing tools like Pyfa, test edge cases with complex module interactions, verify stacking penalties apply correctly, and confirm skill bonuses calculate accurately.",
+      "priority": "high",
+      "dependencies": [
+        3
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Weapon DPS Calculation System",
+          "description": "Create a module that calculates damage per second for all weapon systems including turrets, missiles, and drones with skill bonuses",
+          "dependencies": [],
+          "details": "Implement formulas for turret damage (tracking, falloff, optimal range), missile damage (explosion velocity, explosion radius), and drone damage. Account for damage types (EM, thermal, kinetic, explosive), rate of fire modifiers, damage modifiers from skills and modules. Include calculations for weapon signature resolution against target signature radius. Handle special cases like smartbombs and remote repair systems.",
+          "status": "pending",
+          "testStrategy": "Compare calculated values against known in-game examples for various weapon configurations. Test edge cases like stacking penalties and overheated modules."
+        },
+        {
+          "id": 2,
+          "title": "Develop Effective HP and Resistance Calculations",
+          "description": "Build a system to calculate effective hit points across shield, armor, and hull with resistance profiles",
+          "dependencies": [],
+          "details": "Implement formulas for raw and effective HP calculations including base values and module bonuses. Calculate resistance profiles for all damage types across shield, armor, and hull. Account for active tanking modules (shield boosters, armor repairers) and their repair amounts per cycle. Include passive regeneration rates for shields. Handle stacking penalties for resistance modules and factor in ship bonuses from skills.",
+          "status": "pending",
+          "testStrategy": "Validate calculations against in-game EHP values for various ship configurations. Test with different resistance module combinations to verify stacking penalty implementation."
+        },
+        {
+          "id": 3,
+          "title": "Create Capacitor Stability and Recharge Engine",
+          "description": "Develop a system to calculate capacitor stability, peak recharge, and time-to-depletion with module usage",
+          "dependencies": [],
+          "details": "Implement capacitor recharge curve formulas including base and modified values. Calculate capacitor usage for all active modules with their cycle times and activation costs. Determine capacitor stability percentage and time to depletion under various module activation scenarios. Account for capacitor boosters, batteries, and flux coils. Include skill and implant effects on capacitor capacity and recharge rate.",
+          "status": "pending",
+          "testStrategy": "Compare calculated stability times with in-game simulations. Test with various module combinations and activation patterns to verify accuracy."
+        },
+        {
+          "id": 4,
+          "title": "Build CPU and PowerGrid Resource Management System",
+          "description": "Create a system to track and validate CPU and PowerGrid usage against ship resources with fitting modifications",
+          "dependencies": [],
+          "details": "Implement resource tracking for CPU and PowerGrid usage of all modules. Calculate base and modified resource values based on ship type. Apply skill modifiers from relevant fitting skills (Power Grid Management, CPU Management, etc.). Handle resource modification modules like Reactor Control Units and Co-Processors. Implement validation to detect when fittings exceed available resources. Account for rig penalties and calibration usage.",
+          "status": "pending",
+          "testStrategy": "Verify resource calculations match in-game values for various ship configurations. Test edge cases with tight fitting requirements and skill level variations."
+        },
+        {
+          "id": 5,
+          "title": "Implement Ship Performance Calculations",
+          "description": "Develop calculations for ship speed, agility, align time, and signature radius with module effects",
+          "dependencies": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "details": "Implement formulas for base and modified ship velocity including afterburners and microwarpdrives. Calculate ship agility, align time, and turning radius. Determine signature radius with modifiers from modules and skills. Account for mass changes from modules and cargo. Calculate warp speed and acceleration. Include calculations for tracking speed and scan resolution. Factor in skill bonuses for navigation and electronic systems.",
+          "status": "pending",
+          "testStrategy": "Compare calculated performance metrics with in-game values across different ship classes. Test with various module combinations affecting speed and agility."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Create Visual Fitting Interface with Drag-and-Drop",
+      "description": "Build intuitive WPF fitting interface with visual ship layout, module placement, and real-time compatibility checking",
+      "details": "Design visual ship fitting interface showing high/mid/low/rig slots with drag-and-drop module placement. Implement real-time compatibility validation showing CPU/Power usage, skill requirements, and slot restrictions. Create module browser with filtering by slot type and compatibility. Add visual indicators for fitting issues (red for errors, yellow for warnings). Display real-time statistics panel updating as modules change. Include contextual tooltips explaining errors and module effects. Support undo/redo functionality for fitting changes.",
+      "testStrategy": "Test drag-and-drop works smoothly, compatibility checking prevents invalid placements, visual indicators clearly show fitting status, statistics update in real-time, and error messages provide helpful guidance to users.",
+      "priority": "medium",
+      "dependencies": [
+        4,
+        5
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Design Visual Ship Layout Component",
+          "description": "Create the visual representation of ship with high/mid/low/rig slots",
+          "dependencies": [],
+          "details": "Develop a WPF component that visually represents the ship's fitting layout with clearly defined high, mid, low and rig slots. Include visual indicators for each slot type and ensure the layout is responsive to different window sizes. Design should match EVE Online's aesthetic while maintaining usability.",
+          "status": "pending",
+          "testStrategy": "Verify layout renders correctly for different ship types with varying slot configurations. Test responsiveness at different window sizes."
+        },
+        {
+          "id": 2,
+          "title": "Implement Drag-and-Drop Module Placement",
+          "description": "Create drag-and-drop functionality for placing modules in appropriate slots",
+          "dependencies": [
+            1
+          ],
+          "details": "Implement WPF drag-and-drop system allowing modules to be dragged from the module browser and dropped into compatible ship slots. Include visual feedback during drag operations (highlighting valid drop targets). Handle edge cases like dragging between slots and removing modules by dragging off the fitting area.",
+          "status": "pending",
+          "testStrategy": "Test dragging modules to valid and invalid slots. Verify visual feedback works correctly. Test edge cases like rapid dragging and dropping multiple modules."
+        },
+        {
+          "id": 3,
+          "title": "Develop Real-time Compatibility Validation System",
+          "description": "Create system to validate module compatibility and display CPU/Power usage and requirements",
+          "dependencies": [
+            2
+          ],
+          "details": "Implement validation logic that checks module compatibility in real-time as modules are placed. Track and display CPU/Power grid usage, skill requirements, and slot restrictions. Create event system to trigger validation checks whenever the fitting changes. Implement data structures to efficiently store and update fitting state.",
+          "status": "pending",
+          "testStrategy": "Test with various module combinations that should trigger different validation rules. Verify CPU/Power calculations match EVE Online's mechanics."
+        },
+        {
+          "id": 4,
+          "title": "Create Module Browser with Filtering",
+          "description": "Build a searchable and filterable module browser component",
+          "dependencies": [],
+          "details": "Develop a module browser panel that displays available modules with filtering options by slot type, meta level, and compatibility with current ship. Implement search functionality allowing users to find modules by name or attributes. Include module icons and basic information in the browser view with ability to sort by different properties.",
+          "status": "pending",
+          "testStrategy": "Test search and filter functionality with various inputs. Verify performance with large module databases. Test that compatibility filtering correctly shows only valid modules."
+        },
+        {
+          "id": 5,
+          "title": "Implement Visual Indicators and Undo/Redo System",
+          "description": "Add visual indicators for fitting issues and implement undo/redo functionality",
+          "dependencies": [
+            2,
+            3
+          ],
+          "details": "Create visual indicators (red for errors, yellow for warnings) that highlight fitting issues. Implement contextual tooltips that explain errors and module effects when hovering. Develop a command pattern-based undo/redo system that tracks fitting changes and allows users to revert or reapply changes. Create UI controls for undo/redo operations and keyboard shortcuts.",
+          "status": "pending",
+          "testStrategy": "Test that visual indicators appear correctly for various fitting issues. Verify tooltips display appropriate information. Test undo/redo functionality through multiple operations including complex sequences."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Implement Multi-Objective Fitting Optimization Algorithm",
+      "description": "Develop intelligent fitting generation system creating 5 optimized fittings across DPS-to-Tank spectrum based on player skills",
+      "details": "Implement multi-objective optimization algorithm (consider NSGA-II or similar) balancing DPS, survivability, and utility. Create constraint satisfaction system handling skill requirements, slot limitations, CPU/Power restrictions. Generate 5 fitting variants: Max DPS, DPS-focused, Balanced, Tank-focused, Max Tank. Include skill-aware module selection ensuring player can use all recommended modules. Implement fitting scoring system evaluating effectiveness for different objectives. Add explanation system describing each fitting's design philosophy and trade-offs.",
+      "testStrategy": "Verify generated fittings are valid and usable by character, test optimization produces meaningful variety across DPS-Tank spectrum, validate fittings perform well in their intended roles, and confirm explanations accurately describe fitting characteristics.",
+      "priority": "high",
+      "dependencies": [
+        5
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Multi-Objective Optimization Algorithm Core",
+          "description": "Implement the core NSGA-II (or similar) algorithm to handle multi-objective optimization across DPS, survivability, and utility metrics.",
+          "dependencies": [],
+          "details": "Create a generic optimization framework using NSGA-II algorithm with population initialization, non-dominated sorting, crowding distance calculation, and selection operators. Define objective functions for DPS (damage output), survivability (tank metrics), and utility (e-war, capacitor stability, etc.). Implement chromosome representation for ship fittings with appropriate crossover and mutation operators. Ensure the algorithm can generate a Pareto front of solutions representing different trade-offs between objectives.",
+          "status": "pending",
+          "testStrategy": "Test with simplified ship fitting scenarios and verify the algorithm converges to known optimal solutions. Validate that the Pareto front contains diverse solutions across the objective space."
+        },
+        {
+          "id": 2,
+          "title": "Develop Constraint Satisfaction System",
+          "description": "Create a system to enforce fitting constraints including slot limitations, CPU/Power restrictions, and skill requirements.",
+          "dependencies": [
+            1
+          ],
+          "details": "Implement constraint validators for: powergrid usage, CPU usage, slot allocation (high/mid/low/rig), fitting restrictions (ship-specific module limitations), and skill prerequisites. Create repair operators that can fix invalid fittings by replacing modules or downgrading to less demanding alternatives. Develop a penalty function approach to guide the optimization algorithm away from invalid solutions. Implement efficient constraint checking to minimize performance impact during optimization.",
+          "status": "pending",
+          "testStrategy": "Create test cases with various constraint violations and verify the system correctly identifies and repairs them. Benchmark performance to ensure constraint checking doesn't significantly slow down the optimization process."
+        },
+        {
+          "id": 3,
+          "title": "Implement Skill-Aware Module Selection System",
+          "description": "Create a system that selects modules based on player's current skills, ensuring all recommended modules can be used by the player.",
+          "dependencies": [
+            2
+          ],
+          "details": "Develop a module database with skill requirements for each module. Implement a player skill profile parser to extract relevant skills. Create a filtering mechanism that only considers modules the player can use during optimization. Implement a recommendation system for skills to train when better modules are available but skill-locked. Design fallback logic to select alternative modules when optimal choices are unavailable due to skill limitations.",
+          "status": "pending",
+          "testStrategy": "Test with various player skill profiles and verify that generated fittings only include usable modules. Verify skill recommendations are appropriate for the player's progression path."
+        },
+        {
+          "id": 4,
+          "title": "Create Fitting Variant Generator",
+          "description": "Implement a system to generate the 5 distinct fitting variants (Max DPS, DPS-focused, Balanced, Tank-focused, Max Tank) from the optimization results.",
+          "dependencies": [
+            1,
+            2,
+            3
+          ],
+          "details": "Develop a selection algorithm to extract representative solutions from the Pareto front for each fitting variant. Implement specific objective weightings for each variant type. Create a post-processing system to refine each variant for its intended role. Ensure each variant maintains internal synergy between modules. Implement a diversity check to ensure the 5 variants are sufficiently different from each other to provide meaningful choices.",
+          "status": "pending",
+          "testStrategy": "Verify that each variant type emphasizes its intended characteristics. Test that variants are meaningfully different from each other. Validate that all variants satisfy the constraints and skill requirements."
+        },
+        {
+          "id": 5,
+          "title": "Implement Fitting Scoring and Explanation System",
+          "description": "Create a system to score each fitting variant and generate explanations of design philosophy and trade-offs.",
+          "dependencies": [
+            4
+          ],
+          "details": "Develop scoring metrics for different aspects of ship performance (DPS, tank, utility, etc.). Implement comparative scoring to show relative strengths between variants. Create a template-based explanation system that describes the fitting's focus, key modules, and tactical approach. Generate trade-off explanations highlighting what was sacrificed for the fitting's strengths. Include skill improvement recommendations to enhance the fitting's performance. Implement visualization components to display scores and comparisons in an intuitive way.",
+          "status": "pending",
+          "testStrategy": "Verify explanations are accurate and helpful for different fitting types. Test that scoring correctly identifies the strengths and weaknesses of each variant. Conduct user testing to ensure explanations are understandable to players of different experience levels."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Add Activity-Specific Fitting Customization",
+      "description": "Implement activity-based fitting optimization for PvP, PvE, mining, and hauling with specialized parameters",
+      "details": "Create activity selection interface with categories: PvP (solo, small gang, fleet), PvE (mission types, enemy factions), Mining (ore types, security levels), Hauling (cargo capacity, security). Implement activity-specific optimization parameters modifying base algorithms. Add enemy damage type analysis for PvE optimization, range and engagement profile considerations for PvP, yield optimization for mining, and cargo/tank balance for hauling. Create activity-specific module recommendations and warnings.",
+      "testStrategy": "Test activity selection produces appropriately specialized fittings, PvE fittings handle specified enemy types effectively, PvP fittings match engagement profiles, mining fittings optimize for selected activities, and recommendations include relevant warnings.",
+      "priority": "medium",
+      "dependencies": [
+        7
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Create Activity Selection Interface",
+          "description": "Develop a user interface component that allows users to select their intended ship activity from categories including PvP, PvE, Mining, and Hauling, with relevant subcategories for each.",
+          "dependencies": [],
+          "details": "Implement a hierarchical selection component with main categories (PvP, PvE, Mining, Hauling) and subcategories for each (e.g., PvP: solo, small gang, fleet; PvE: mission types, enemy factions). Use radio buttons or dropdown selectors for main categories and checkboxes for subcategories where multiple selections are valid. Store the selected activity configuration in the application state to be used by the fitting algorithm.",
+          "status": "pending",
+          "testStrategy": "Test UI rendering for all activity categories and subcategories. Verify that selections are correctly stored in application state and persist between sessions if applicable."
+        },
+        {
+          "id": 2,
+          "title": "Implement PvP Optimization Parameters",
+          "description": "Create specialized fitting parameters for PvP activities that consider engagement range, fleet composition, and target profile.",
+          "dependencies": [
+            1
+          ],
+          "details": "Extend the base fitting algorithm to incorporate PvP-specific parameters: engagement range preferences (brawling, kiting), target profile (size, expected resistances), and role in fleet (tackle, DPS, support). Implement weighting factors that prioritize appropriate modules based on the selected PvP subcategory. For solo PvP, emphasize balanced fitting with survival capabilities; for small gang, focus on specialized roles; for fleet operations, optimize for fleet doctrine compatibility.",
+          "status": "pending",
+          "testStrategy": "Create test cases with sample ships and verify that module recommendations change appropriately based on different PvP activity selections. Compare algorithm output against known effective PvP fits."
+        },
+        {
+          "id": 3,
+          "title": "Develop PvE Enemy Analysis System",
+          "description": "Build a system that analyzes enemy NPC factions and mission types to recommend optimal damage types and defensive priorities.",
+          "dependencies": [
+            1
+          ],
+          "details": "Create a database of enemy NPC factions with their damage profiles and resistance patterns. Implement logic that, based on the selected PvE activity (mission type, enemy faction), recommends optimal damage types to deal and resistances to prioritize. Include considerations for mission-specific requirements like target range, NPC behavior patterns, and special mission conditions. Integrate with the fitting algorithm to adjust module recommendations based on this analysis.",
+          "status": "pending",
+          "testStrategy": "Test with known mission types and verify that damage type recommendations match expected optimal choices for each NPC faction. Validate that defensive module suggestions properly counter the expected incoming damage types."
+        },
+        {
+          "id": 4,
+          "title": "Create Mining and Hauling Specialization Logic",
+          "description": "Implement specialized optimization parameters for mining and hauling activities that consider ore types, security levels, cargo capacity, and risk assessment.",
+          "dependencies": [
+            1
+          ],
+          "details": "For mining activities, develop logic that optimizes for yield based on selected ore types and security levels, balancing mining laser types, survey equipment, and defensive capabilities. For hauling, implement algorithms that optimize cargo capacity while maintaining appropriate tank for the selected security level routes. Include specialized module recommendations like cargo expanders, inertial stabilizers, and warp core stabilizers based on risk profile. Create logic for calculating optimal cargo/tank balance based on cargo value and security risk.",
+          "status": "pending",
+          "testStrategy": "Test mining fits against known optimal configurations for different ore types. For hauling, verify that cargo capacity and defensive recommendations scale appropriately with security level selection and cargo requirements."
+        },
+        {
+          "id": 5,
+          "title": "Implement Activity-Specific Recommendation Engine",
+          "description": "Create a recommendation system that provides activity-specific module suggestions, warnings, and fitting advice based on the selected activity and ship characteristics.",
+          "dependencies": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "details": "Develop a recommendation engine that integrates data from all activity-specific parameters to generate tailored fitting suggestions. Implement warning systems that flag potential issues with fits based on activity requirements (e.g., insufficient tank for selected security level, inappropriate weapon systems for target profile). Create an explanation component that provides rationale for recommendations to educate users on fitting principles. Include alternative module suggestions when optimal choices may be unavailable or too expensive.",
+          "status": "pending",
+          "testStrategy": "Test the recommendation engine with various ship types and activity combinations to ensure appropriate suggestions. Verify that warnings are triggered correctly for suboptimal configurations. Conduct user testing to ensure explanations are helpful and understandable."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Build Skill Analysis and Training Plan System",
+      "description": "Create skill gap analysis and optimized training plan generation for improving fitting effectiveness",
+      "details": "Implement skill gap analysis comparing current character skills to optimal fitting requirements. Create training plan generator using shortest-path algorithms considering skill prerequisites and training times. Generate multiple plan options: minimum requirements vs optimal performance. Show training time estimates, milestone achievements, and fitting improvement progression. Integrate with ESI skill queue data for plan comparison. Include skill priority recommendations based on effectiveness gains per training time invested.",
+      "testStrategy": "Verify skill gap analysis accurately identifies missing skills, training plans respect prerequisites and minimize total time, time estimates match game calculations, and recommendations prioritize high-impact skills appropriately.",
+      "priority": "medium",
+      "dependencies": [
+        7
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Skill Gap Analysis Engine",
+          "description": "Create a system that compares a character's current skills to the optimal skills required for a specific ship fitting and identifies the gaps.",
+          "dependencies": [],
+          "details": "Build a service that takes a character's current skill levels (from ESI or database) and a ship fitting as inputs. Compare each skill required by the fitting with the character's current level. Calculate effectiveness penalties for each skill gap. Output a structured report of missing skills, current vs. required levels, and impact on fitting performance. Include categorization of skills by importance (critical vs. optimization).",
+          "status": "pending",
+          "testStrategy": "Create test fixtures with sample character skills and fitting requirements. Verify gap identification accuracy, effectiveness calculations, and edge cases like zero skills or already optimal skills."
+        },
+        {
+          "id": 2,
+          "title": "Develop Skill Prerequisite Graph and Resolver",
+          "description": "Create a data structure and resolver that represents EVE's skill prerequisite relationships and can determine all prerequisites for any given skill.",
+          "dependencies": [],
+          "details": "Implement a directed graph representation of skill prerequisites. Each node should contain skill ID, name, rank, and primary/secondary attributes. Edges represent prerequisite relationships with required levels. Create methods to: 1) Find all prerequisites for a given skill, 2) Determine if a character meets prerequisites, 3) Calculate the full prerequisite chain for multiple target skills while eliminating duplicates. Cache the graph structure for performance.",
+          "status": "pending",
+          "testStrategy": "Test with known skill chains to verify all prerequisites are correctly identified. Test complex cases with branching prerequisites and different required levels."
+        },
+        {
+          "id": 3,
+          "title": "Build Training Time Estimation System",
+          "description": "Create a system that accurately calculates training times for skills based on character attributes, implants, and current skill levels.",
+          "dependencies": [],
+          "details": "Implement the EVE skill training time formula accounting for character attributes, skill rank, and current/target skill levels. Include support for attribute enhancers (implants). Create functions to calculate: 1) Time for a single skill level, 2) Cumulative time for multiple skills, 3) Training time with and without attribute optimization. Provide both point-in-time estimates and calendar-based completion dates accounting for partially trained skills.",
+          "status": "pending",
+          "testStrategy": "Compare calculated training times against known examples from EVE. Test edge cases like training from level 0, training to level 5, and the effects of different implant sets."
+        },
+        {
+          "id": 4,
+          "title": "Implement Training Plan Generation Algorithm",
+          "description": "Create an algorithm that generates optimal training plans based on skill gaps, prerequisites, and training times.",
+          "dependencies": [],
+          "details": "Implement a modified shortest-path algorithm that considers skill prerequisites, training times, and effectiveness gains. Generate multiple plan options: 1) Minimum viable plan (fastest to basic effectiveness), 2) Optimal performance plan (complete skill coverage), 3) Balanced approach with intermediate milestones. Sort skills by training efficiency (effectiveness gain per training time). Handle special cases like partially trained skills and skills already in queue. Output a structured training plan with ordered skill sequence, estimated completion times, and effectiveness milestones.",
+          "status": "pending",
+          "testStrategy": "Test with various skill gap scenarios to verify plan optimality. Compare generated plans against manually optimized examples. Verify that prerequisites are always trained before dependent skills."
+        },
+        {
+          "id": 5,
+          "title": "Integrate with ESI Skill Queue and Build UI Components",
+          "description": "Connect to EVE ESI to retrieve and compare current skill queue with generated plans, and create UI components to display analysis and plans.",
+          "dependencies": [],
+          "details": "Implement ESI client to fetch character's current skill queue. Create comparison logic between current queue and generated optimal plans. Build UI components for: 1) Skill gap visualization with color-coded importance, 2) Training plan display with timeline and milestones, 3) Interactive plan adjustment tools, 4) Effectiveness progression chart showing fitting improvement over time. Include options to export plans to EVEMon format. Add priority recommendations highlighting skills with highest effectiveness gain per training time.",
+          "status": "pending",
+          "testStrategy": "Test ESI integration with mock responses. Perform usability testing on UI components to ensure clarity of information. Verify that plan adjustments correctly recalculate dependencies and training times."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Integrate Market Data and Cost Analysis",
+      "description": "Add real-time market price integration showing fitting costs and affordability analysis",
+      "details": "Implement market data service using ESI market endpoints for real-time pricing. Cache market data with intelligent refresh based on ESI cache headers. Display module and ship prices in fitting interface with total cost calculations. Show price comparisons across major trade hubs (Jita, Amarr, Dodixie, Rens). Integrate character wallet data to show affordability indicators. Add price history and trend analysis for expensive items. Include cost-effectiveness analysis comparing fitting performance to total cost.",
+      "testStrategy": "Verify market prices match in-game values, cost calculations include all fitting components, affordability indicators work with character wallet data, and price comparisons show meaningful regional differences.",
+      "priority": "medium",
+      "dependencies": [
+        6
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement ESI Market Data Service",
+          "description": "Create a service to fetch real-time market data from EVE Swagger Interface (ESI) endpoints for items used in ship fittings.",
+          "dependencies": [],
+          "details": "Develop a service class that handles API calls to ESI market endpoints. Implement methods to fetch market orders for specific item types, with parameters for region and order type (buy/sell). Include error handling for API failures and rate limiting compliance. Create data models to represent market orders and prices. Add utility functions to find minimum sell and maximum buy prices for items.",
+          "status": "pending",
+          "testStrategy": "Unit test the service with mock ESI responses. Create integration tests with the actual ESI API using test server if available. Verify correct handling of various response scenarios including errors and empty results."
+        },
+        {
+          "id": 2,
+          "title": "Build Intelligent Market Data Caching System",
+          "description": "Implement a caching layer for market data that respects ESI cache headers and intelligently refreshes based on market volatility.",
+          "dependencies": [
+            1
+          ],
+          "details": "Create a caching service that stores fetched market data with expiration based on ESI cache headers. Implement tiered caching with memory cache for frequent lookups and persistent storage for longer retention. Add logic to determine refresh frequency based on item type volatility (more frequent for commonly traded items). Include cache invalidation triggers for major market events. Implement background refresh for frequently accessed items to prevent cache misses during user sessions.",
+          "status": "pending",
+          "testStrategy": "Test cache hit/miss scenarios and verify expiration logic works correctly. Benchmark performance improvements with caching enabled vs. disabled. Verify memory usage remains within acceptable limits under heavy load."
+        },
+        {
+          "id": 3,
+          "title": "Integrate Price Display in Fitting Interface",
+          "description": "Add price information to the fitting interface showing individual module costs and total fitting cost.",
+          "dependencies": [
+            2
+          ],
+          "details": "Extend the fitting UI components to display price information for each module, ship hull, and other components. Create a price summary panel showing itemized costs and total fitting cost. Implement price formatting with appropriate ISK units (millions/billions). Add visual indicators for expensive items. Update price displays when fitting changes occur. Include a refresh button to manually update prices when needed.",
+          "status": "pending",
+          "testStrategy": "Create UI tests to verify price displays update correctly when fitting changes. Test edge cases like extremely expensive or unavailable items. Verify formatting handles large numbers appropriately."
+        },
+        {
+          "id": 4,
+          "title": "Develop Regional Price Comparison System",
+          "description": "Implement functionality to compare prices across major trade hubs (Jita, Amarr, Dodixie, Rens) and display the best locations to purchase fitting components.",
+          "dependencies": [
+            2
+          ],
+          "details": "Create a trade hub comparison component that fetches and displays prices for the same items across different regions. Implement a best-price finder algorithm that considers both item price and travel distance. Add a visual comparison table showing price differences between hubs. Include filters to focus on specific item categories or price thresholds. Create a shopping list feature that organizes purchases by optimal location.",
+          "status": "pending",
+          "testStrategy": "Test the comparison logic with known price differentials between regions. Verify the UI correctly highlights the best purchasing locations. Test with fittings containing items that have significant regional price variations."
+        },
+        {
+          "id": 5,
+          "title": "Create Cost-Effectiveness Analysis Tools",
+          "description": "Develop analysis features that compare fitting performance metrics to total cost, showing value propositions and alternatives.",
+          "dependencies": [
+            3,
+            4
+          ],
+          "details": "Implement algorithms to calculate performance-to-cost ratios for key ship attributes (DPS, tank, speed, etc.). Create visualization components showing cost-effectiveness compared to similar fittings. Add suggestions for alternative modules that offer better value. Integrate with wallet data (if available) to show affordability indicators. Develop price history tracking to show trends for expensive components. Include export functionality for cost analysis reports.",
+          "status": "pending",
+          "testStrategy": "Test with a variety of ship fittings to ensure analysis works across different ship types and roles. Verify performance metrics are correctly factored into cost-effectiveness calculations. Test alternative suggestions to ensure they maintain fitting viability."
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Implement Fitting Management and Export System",
+      "description": "Create comprehensive fitting save/load system with import/export capabilities in standard EVE formats",
+      "details": "Implement fitting CRUD operations with LiteDB persistence. Support import/export in EFT format, EVE COPY format, and custom JSON. Create fitting organization system with folders, tags, and favorites. Add fitting search and filtering within saved collections. Implement fitting sharing capabilities and version history. Include backup/restore functionality for user data protection. Support batch operations for managing large fitting collections.",
+      "testStrategy": "Test fitting save/load preserves all data accurately, import/export works with standard EVE formats, organization features help manage large collections, sharing functionality works reliably, and backup/restore protects against data loss.",
+      "priority": "medium",
+      "dependencies": [
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 12,
+      "title": "Add Educational Features and Polish Application",
+      "description": "Implement comprehensive help system, fitting explanations, and final application polish for release readiness",
+      "details": "Create contextual help system explaining EVE mechanics and fitting principles. Add detailed fitting explanations showing why modules are chosen and how they work together. Implement interactive tutorials for new users. Create fitting comparison tools with visual charts and statistics. Add user preferences system for UI customization. Implement comprehensive error handling with user-friendly messages. Optimize performance for large datasets and complex calculations. Add application settings, update mechanisms, and crash reporting.",
+      "testStrategy": "Verify help system provides useful guidance, explanations accurately describe fitting logic, tutorials successfully onboard new users, comparison tools show meaningful insights, preferences persist correctly, and application handles errors gracefully without crashes.",
+      "priority": "medium",
+      "dependencies": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Contextual Help System",
+          "description": "Create a comprehensive help system that provides context-sensitive information about EVE mechanics and fitting principles throughout the application.",
+          "dependencies": [],
+          "details": "Design a help overlay system that can be triggered from any screen. Create a database of help content organized by topic and context. Implement a mechanism to detect the current context and display relevant help. Add search functionality to help content. Include links to official EVE documentation where appropriate.",
+          "status": "pending",
+          "testStrategy": "Test help triggers from different screens, verify correct context detection, and ensure all help content is accessible and properly formatted."
+        },
+        {
+          "id": 2,
+          "title": "Develop Fitting Explanation Engine",
+          "description": "Create a system that explains why specific modules are chosen for a ship fitting and how they work together to achieve the fitting's purpose.",
+          "dependencies": [],
+          "details": "Implement an algorithm to analyze module synergies and dependencies. Create a template system for generating natural language explanations. Add visual indicators showing module relationships and interactions. Include performance metrics that justify module choices. Provide alternative suggestions with pros/cons for educational purposes.",
+          "status": "pending",
+          "testStrategy": "Test with various fitting configurations to ensure explanations are accurate and helpful. Conduct user testing to verify explanations are understandable to both new and experienced players."
+        },
+        {
+          "id": 3,
+          "title": "Create Interactive Tutorials",
+          "description": "Develop step-by-step interactive tutorials to guide new users through the application and teach basic to advanced fitting concepts.",
+          "dependencies": [],
+          "details": "Design a tutorial framework with progressive difficulty levels. Implement interactive elements that require user actions to proceed. Create animated demonstrations of fitting concepts. Add achievement/progress tracking to encourage completion. Include quizzes to test understanding of key concepts.",
+          "status": "pending",
+          "testStrategy": "Test tutorial flow with users of varying EVE experience levels. Verify that all interactive elements work correctly and that tutorials can be paused and resumed."
+        },
+        {
+          "id": 4,
+          "title": "Implement Fitting Comparison Tools",
+          "description": "Create visual charts and statistics tools that allow users to compare different ship fittings side by side.",
+          "dependencies": [],
+          "details": "Design comparative visualization components for key metrics (DPS, tank, capacitor, etc.). Implement radar/spider charts for multi-attribute comparison. Create tabular comparison views with highlighting of significant differences. Add the ability to save and share comparisons. Include export functionality for comparison results.",
+          "status": "pending",
+          "testStrategy": "Test with diverse fitting types to ensure visualizations accurately represent differences. Verify performance with large numbers of comparison items."
+        },
+        {
+          "id": 5,
+          "title": "Add User Preferences and Performance Optimization",
+          "description": "Implement a user preferences system for UI customization and optimize application performance for large datasets and complex calculations.",
+          "dependencies": [],
+          "details": "Create a preferences panel with options for UI themes, data display formats, and feature toggles. Implement settings persistence between sessions. Profile and optimize CPU-intensive calculations. Implement data caching for frequently accessed information. Add background processing for complex operations. Create a system for error handling with user-friendly messages. Implement crash reporting and automatic recovery.",
+          "status": "pending",
+          "testStrategy": "Test preference saving/loading across application restarts. Benchmark performance before and after optimization. Test error handling by deliberately triggering various error conditions."
+        }
+      ]
+    }
+  ]
+}

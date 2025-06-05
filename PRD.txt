@@ -1,0 +1,435 @@
+# Overview
+EveHelper is an intelligent desktop companion application for EVE Online that revolutionizes ship fitting for new and intermediate players. The core problem it solves is the overwhelming complexity of ship fitting in EVE Online - with thousands of modules, complex attribute interactions, and skill dependencies, new players often struggle to create effective fittings or understand what they can realistically fly with their current skills. EveHelper analyzes a player's completed skills and automatically generates 5 optimized ship fittings ranging from maximum DPS to maximum tank, then allows customization based on specific activities (PvP objectives, mining operations, hauling cargo, or combat scenarios). This removes the guesswork and provides a clear learning path for players to understand fitting principles while ensuring they can actually use the recommended setups. The value lies in transforming EVE's steep learning curve into an accessible, guided experience that helps players make informed decisions and progress confidently in their virtual careers.
+
+# Core Features
+
+## 1. Intelligent Ship Browser & Search System
+-   **What it does:** Provides comprehensive ship browsing and search capabilities allowing users to find ships by name, group, category, market group, or attribute filters (speed, cargo capacity, slot layout, etc.). Displays detailed ship information including base stats, slot configurations, and skill requirements.
+-   **Why it's important:** With hundreds of ships in EVE Online, players need efficient ways to discover ships that match their interests, skills, and intended activities. This prevents overwhelming choice paralysis common among new players.
+-   **How it works at a high level:**
+    -   Implements advanced filtering system with multiple criteria (ship class, role, faction, attributes).
+    -   Shows skill requirements with clear indicators of what the player can currently fly.
+    -   Displays ship comparison tools to evaluate multiple hulls side-by-side.
+    -   Integrates with market data to show estimated ship costs and availability.
+    -   Provides ship role explanations and recommended use cases for each hull.
+
+## 2. Advanced Module Discovery & Compatibility System
+-   **What it does:** Enables users to discover and explore all compatible modules for any ship and slot type (High/Mid/Low/Rig/Subsystem). Provides detailed module attribute breakdowns, compatibility checks, and fitting validation in real-time.
+-   **Why it's important:** Understanding which modules can fit where and how they interact is fundamental to effective ship fitting. New players often struggle with module compatibility and don't understand the vast array of available options.
+-   **How it works at a high level:**
+    -   Displays modules organized by slot type with intelligent filtering and search.
+    -   Shows real-time compatibility checking including CPU/Power requirements and skill prerequisites.
+    -   Provides detailed attribute breakdowns and effect explanations for each module.
+    -   Highlights module synergies and warns about potential conflicts or suboptimal choices.
+    -   Integrates market pricing and availability data for informed module selection.
+
+## 3. Comprehensive Fitting Management System
+-   **What it does:** Allows users to create, save, delete, import, and export ship fittings in standard EVE Online formats (EFT, COPY format, and custom JSON). Provides fitting organization with folders, tags, and search capabilities for efficient management of large fitting collections.
+-   **Why it's important:** Players accumulate many fittings over time and need efficient ways to organize, share, and manage them. Standard format support ensures compatibility with existing EVE Online tools and community resources.
+-   **How it works at a high level:**
+    -   Implements full CRUD operations for fitting management with intuitive UI.
+    -   Supports import/export in EFT format, COPY format, and application-specific JSON.
+    -   Provides fitting organization with folders, favorites, and tagging systems.
+    -   Includes fitting sharing capabilities and integration with popular fitting repositories.
+    -   Maintains fitting history and version control for tracking changes over time.
+
+## 4. Real-Time Fitting Statistics Engine
+-   **What it does:** Calculates and displays comprehensive fitting statistics including power grid usage, CPU consumption, capacitor stability, DPS (with drones), resistances, speed, agility, and cost analysis. All calculations update in real-time as modules are added, removed, or modified.
+-   **Why it's important:** Understanding fitting performance metrics is crucial for effective ship building. Real-time feedback helps players learn cause-and-effect relationships between module choices and ship performance.
+-   **How it works at a high level:**
+    -   Implements accurate EVE Online calculation algorithms including stacking penalties.
+    -   Accounts for character skills, implants, and ship bonuses in all calculations.
+    -   Provides visual indicators for resource usage (CPU/Power) with warning systems.
+    -   Calculates effective DPS including drone contributions and optimal range considerations.
+    -   Shows detailed resistance profiles and effective HP calculations for survivability analysis.
+
+## 5. Intelligent Multi-Objective Fitting Generator
+-   **What it does:** Automatically generates five optimized ship fittings tailored to specific goals: Max DPS (maximum damage output with drones and implants), Max Tank (prioritizing survivability), Well-Rounded (balanced approach), and two intermediate variants. Includes mission-specific optimization based on enemy NPC damage types.
+-   **Why it's important:** New players struggle to understand fitting trade-offs and often create suboptimal builds. Automated generation with clear objectives helps players understand different approaches while ensuring they get effective, usable fittings.
+-   **How it works at a high level:**
+    -   Uses multi-objective optimization algorithms to balance competing goals (DPS, tank, utility).
+    -   Factors in player skills, available modules, and resource constraints for realistic builds.
+    -   Generates mission-specific fittings by analyzing enemy damage types and resistance requirements.
+    -   Provides clear explanations for each fitting's design philosophy and intended use case.
+    -   Automatically adjusts recommendations as player skills improve or new modules become available.
+
+## 6. Advanced Skill Planning & Optimization
+-   **What it does:** Creates custom skill training plans optimized for flying desired ships efficiently. Analyzes skill gaps for specific fittings and generates time-optimized training sequences that maximize benefit per training day invested.
+-   **Why it's important:** Skill training in EVE Online requires long-term planning, and poor choices can waste months of training time. Optimized plans help players reach their goals efficiently while understanding the progression path.
+-   **How it works at a high level:**
+    -   Analyzes target ships and fittings to identify required and beneficial skills.
+    -   Calculates optimal training order considering skill prerequisites and training time.
+    -   Provides multiple plan options (minimum requirements vs. optimal performance).
+    -   Shows training time estimates and milestone achievements throughout the plan.
+    -   Integrates with ESI to compare plans against current skill queue and suggest adjustments.
+
+## 7. Live Market Data Integration
+-   **What it does:** Retrieves and displays real-time market prices for ships and modules alongside fitting recommendations. Shows wallet information, transaction history, and provides cost analysis for complete fittings across different market hubs.
+-   **Why it's important:** Cost is a significant factor in fitting decisions, especially for new players with limited ISK. Current pricing helps players make informed decisions and budget effectively for their ship builds.
+-   **How it works at a high level:**
+    -   Fetches current market data via ESI API with intelligent caching to respect rate limits.
+    -   Displays prices from major trade hubs with comparison tools.
+    -   Shows fitting total costs with individual module pricing breakdowns.
+    -   Integrates with player wallet data to show affordability indicators.
+    -   Provides price history and trend analysis for expensive items.
+
+## 8. Visual Fitting Interface & Compatibility Alerts
+-   **What it does:** Provides an intuitive WPF-based visual interface for fitting ships with drag-and-drop module placement, real-time compatibility checking, and visual alerts for fitting issues (CPU/Power overload, skill requirements, etc.).
+-   **Why it's important:** Visual feedback makes the fitting process more intuitive and helps players understand ship layouts and module relationships. Immediate error feedback prevents frustration and helps players learn fitting constraints.
+-   **How it works at a high level:**
+    -   Implements interactive ship layout visualization with slot representations.
+    -   Provides drag-and-drop module placement with immediate validation feedback.
+    -   Shows visual indicators for resource usage, skill requirements, and compatibility issues.
+    -   Includes contextual help and tooltips explaining any errors or warnings.
+    -   Supports multiple viewing modes (detailed stats, simplified layout, comparison view).
+
+## 9. Comprehensive Data Caching & Offline Capability
+-   **What it does:** Downloads and maintains local caches of EVE Online Static Data Export (SDE), item images, and market data for offline functionality. Provides automatic cache management with intelligent update mechanisms.
+-   **Why it's important:** Reliable offline functionality ensures the application remains useful even without internet connectivity. Efficient caching improves performance and reduces load on EVE Online's APIs.
+-   **How it works at a high level:**
+    -   Downloads and caches complete SDE data for ships, modules, skills, and game mechanics.
+    -   Implements efficient image caching for ship renders, module icons, and corporation logos.
+    -   Provides cache management tools with manual refresh and automatic update scheduling.
+    -   Maintains data integrity checks and fallback mechanisms for corrupted cache data.
+    -   Optimizes storage usage while ensuring comprehensive offline functionality.
+
+## 10. Secure EVE Online Integration
+-   **What it does:** Authenticates via EVE Online SSO to securely retrieve character skill lists, asset inventories, wallet information, and skill queue data. Maintains secure token management with automatic refresh capabilities.
+-   **Why it's important:** Integration with live character data ensures recommendations are always relevant to the player's current capabilities. Secure authentication protects player data while providing seamless integration.
+-   **How it works at a high level:**
+    -   Implements OAuth 2.0 PKCE flow for secure character authentication.
+    -   Retrieves character data via ESI API including skills, assets, wallet, and skill queue.
+    -   Maintains secure token storage with automatic refresh and error handling.
+    -   Provides multi-character support for players with multiple accounts.
+    -   Respects ESI rate limits and caching headers for optimal API usage.
+
+## 11. Persistent User Data & Preferences
+-   **What it does:** Saves and persists user preferences, favorite fittings, custom skill plans, and application settings between sessions using local storage. Provides backup and restore capabilities for user data protection.
+-   **Why it's important:** Users invest significant time in creating fittings and skill plans. Reliable persistence ensures this investment is protected and easily accessible across application sessions.
+-   **How it works at a high level:**
+    -   Implements robust local storage using LiteDB for structured data persistence.
+    -   Provides automatic backup mechanisms with configurable retention policies.
+    -   Supports data export/import for backup and migration purposes.
+    -   Maintains user preferences including UI layout, default settings, and customizations.
+    -   Includes data integrity checks and recovery mechanisms for corrupted data.
+
+# User Experience
+
+## User Personas
+1.  **The Overwhelmed Newcomer (0-6 months playing):**
+    -   **Needs:** Simple, effective fittings they can actually use; clear explanations of why fittings work; guidance on skill training priorities.
+    -   **Pain Points:** Information overload from existing tools; fittings they can't use; losing ships due to poor fits; not understanding game mechanics.
+    -   **Goals:** Get into the game quickly with working setups; learn gradually without being overwhelmed; avoid expensive mistakes.
+
+2.  **The Progressing Player (6-18 months playing):**
+    -   **Needs:** Optimization within skill constraints; activity-specific fitting advice; clear upgrade paths as skills improve.
+    -   **Pain Points:** Knowing they could do better but not sure how; understanding trade-offs between different approaches; efficiently planning skill training.
+    -   **Goals:** Optimize their current capabilities; understand fitting principles; plan character progression effectively.
+
+3.  **The Returning Player (Taking a break and coming back):**
+    -   **Needs:** Quick catch-up on what they can currently fly; updated fittings for current game meta; refresher on fitting principles.
+    -   **Pain Points:** Game changes while away; old fittings may be outdated; forgetting what they were working toward.
+    -   **Goals:** Get back into the game quickly; understand current capabilities; adapt to any game changes.
+
+## Key User Flows
+1.  **Getting Ship Recommendations:**
+    -   User selects a ship they're interested in (browse by category, search, or favorites).
+    -   App analyzes their current skills and displays 5 optimized fittings with clear statistics.
+    -   User selects their intended activity from guided categories (PvP type, PvE enemies, mining, hauling).
+    -   App refines recommendations based on activity and explains the reasoning.
+    -   User can save preferred fittings, export to game, or explore upgrade paths.
+
+2.  **Learning and Skill Planning:**
+    -   User views a recommended fitting and clicks "How can I improve this?"
+    -   App shows skill gaps and their impact on fitting effectiveness.
+    -   User selects skills they're interested in training.
+    -   App generates optimized training plan showing time investment and improvements.
+    -   User can add recommended skills to their in-game training queue.
+
+3.  **Activity-Specific Guidance:**
+    -   User selects "I want to mine" or "I want to do PvP" from the main interface.
+    -   App guides them through specific choices (ore types, PvP scenarios, etc.).
+    -   Shows ship recommendations suitable for their skills and chosen activity.
+    -   Provides activity-specific tips and warnings for each recommended fitting.
+
+## UI/UX Considerations
+-   **Simplicity First:** Clean, uncluttered interface that doesn't overwhelm new players with too much information at once.
+-   **Progressive Disclosure:** Basic information visible immediately, with detailed explanations available on demand.
+-   **Visual Learning:** Charts, graphs, and visual comparisons to help players understand trade-offs and improvements.
+-   **Guided Workflows:** Step-by-step processes for complex decisions, with clear explanations at each step.
+-   **Contextual Help:** Integrated explanations of EVE mechanics without requiring external documentation.
+-   **Responsive Feedback:** Immediate visual feedback when making changes or selections.
+-   **Accessibility:** Suitable for players of all experience levels, with advanced features available but not prominent.
+
+# Technical Architecture
+
+## System Components
+-   **EveHelper.App (WPF UI Layer):**
+    -   Interactive desktop interface for viewing ships, fittings, and skill plans.
+    -   Views (XAML) with MaterialDesign styling for modern, clean interface.
+    -   ViewModels implementing MVVM pattern for data binding and user interaction.
+    -   Navigation services for seamless flow between different app sections.
+    -   User interface components optimized for fitting display, comparison, and management.
+    -   Drag-and-drop fitting interface with real-time validation feedback.
+
+-   **EveHelper.Services (Business Logic Layer):**
+    -   **SDE Data Service**: Downloads and caches EVE static data, exposes types, groups, categories, and attributes from the Static Data Export.
+    -   **ESI Client**: Wraps HTTP calls to EVE's ESI API for character info, skill lists, market prices, fittings, wallet data, and asset information.
+    -   **Cache Service**: Generic in-memory and disk cache system for SDE data, images, API responses, and user data with intelligent refresh mechanisms.
+    -   **Ship Data Service**: Provides comprehensive ship lists, module compatibility checking, slot counts, and detailed ship information with filtering capabilities.
+    -   **Fitting Service**: Create, save, delete, import, export fittings in multiple formats (EFT, COPY, JSON) and calculate comprehensive fitting statistics including DPS, tank, capacitor, and resource usage.
+    -   **Image Service**: Downloads and caches item icons, ship images, corporation logos, and character portraits as byte arrays with efficient storage management.
+    -   **Skill Service**: Builds and optimizes skill plans based on piloting goals, analyzes skill gaps, and generates time-optimized training sequences.
+    -   **Market Service**: Retrieves and caches real-time market prices, transaction history, and wallet information across multiple trade hubs.
+    -   **Module Service**: Provides module discovery, compatibility analysis, and detailed attribute breakdowns for all slot types.
+
+-   **EveHelper.Core (Models & Interfaces Layer):**
+    -   Core data models for ships, modules, fittings, skills, player data, and market information.
+    -   Service interfaces ensuring separation of concerns and testability.
+    -   Business logic models for optimization algorithms, calculations, and data transformations.
+    -   EVE Online specific models for SDE types, groups, categories, and attributes.
+    -   ESI response models for character data, market data, and API integration.
+
+-   **EveHelper.Data (Data Access Layer):**
+    -   SDE data access and parsing logic for ships, modules, skills, and game mechanics.
+    -   Local cache management with LiteDB for structured data persistence and offline functionality.
+    -   Data transformation services for converting between ESI responses and internal models.
+    -   Static asset and image caching with automatic update mechanisms.
+    -   User data persistence for fittings, skill plans, preferences, and application state.
+
+## Data Models (Key Examples)
+-   `OptimizedFitting`: Represents a generated fitting with effectiveness scores and explanations.
+-   `SkillAnalysis`: Contains player's current skills with gaps and training recommendations.
+-   `ActivityProfile`: Defines optimization parameters for specific activities (PvP, mining, etc.).
+-   `FittingComparison`: Structure for side-by-side fitting analysis and statistics.
+-   `TrainingPlan`: Optimized skill training sequence with time estimates and benefits.
+-   `ShipCapability`: Analysis of what a player can effectively do with a specific ship and their skills.
+
+## APIs and Integrations
+EveHelper integrates data from the EVE SDE (Static Data Export) and ESI (EVE Swagger Interface) to provide comprehensive ship and module lookup, fitting management, skill planning, and market data functionality.
+
+-   **EVE Online ESI (EVE Swagger Interface):**
+    -   **Character Data**: Skills, skill queue, training information, and character attributes.
+    -   **Market Data**: Real-time prices, transaction history, and market orders across all regions.
+    -   **Wallet Information**: ISK balance, transaction history, and spending analysis.
+    -   **Asset Data**: Character assets, locations, and item inventories.
+    -   **Fitting Data**: Character saved fittings and loadouts (where available).
+    -   **OAuth 2.0 PKCE authentication** for secure character access with automatic token refresh.
+    -   **Rate limiting compliance** with intelligent caching respecting ESI cache headers.
+    -   **Multi-character support** for players with multiple accounts.
+
+-   **EVE Static Data Export (SDE):**
+    -   **Ship Database**: Complete ship attributes, slot layouts, bonuses, and base statistics.
+    -   **Module Database**: All module types, attributes, effects, and fitting requirements.
+    -   **Skill Database**: Skill prerequisites, training times, attribute requirements, and bonuses.
+    -   **Type System**: Types, groups, categories, and market groups for comprehensive data organization.
+    -   **Game Mechanics**: Stacking penalties, damage calculations, and fitting formulas.
+    -   **Localized Data**: Item names and descriptions in multiple languages.
+    -   **Cached locally** using LiteDB for offline functionality and high-performance queries.
+    -   **Automatic updates** with version checking and incremental data refresh.
+
+-   **EVE Image Server:**
+    -   **Ship Renders**: High-quality 3D ship images in multiple sizes and orientations.
+    -   **Item Icons**: Module icons, ammunition types, and other game assets.
+    -   **Character Portraits**: Player character images and corporation/alliance logos.
+    -   **Cached as byte arrays** with efficient storage management and fallback handling.
+    -   **Lazy loading** with background download and progressive image enhancement.
+
+## Infrastructure Requirements
+-   **Development Environment:** Windows 10+, .NET 8 SDK, Visual Studio/Rider/VS Code.
+-   **User Requirements:** Windows 10+ with .NET 8 Desktop Runtime, internet connection for initial setup and periodic updates.
+-   **Performance Targets:** Sub-second fitting generation, responsive UI during calculations, efficient memory usage for large datasets.
+-   **Deployment:** Self-contained installer (MSIX preferred) with all dependencies bundled.
+
+# Development Roadmap
+
+## Phase 1: Foundation and Data Infrastructure
+**Goal:** Establish project structure, ESI integration, and SDE data handling for basic ship and skill information.
+-   **Requirements:**
+    1.  Project setup with proper architecture (App, Services, Core, Data layers).
+    2.  MaterialDesign WPF application shell with basic navigation.
+    3.  ESI OAuth2 implementation with secure token management.
+    4.  Character skill fetching and local caching system.
+    5.  SDE data integration with local caching for ships and modules.
+    6.  Basic ship browser showing available ships and their requirements.
+    7.  Simple skill viewer displaying current character skills and levels.
+-   **Outcome:** Users can authenticate, view their character skills, and browse available ships.
+
+## Phase 2: Core Fitting Analysis Engine
+**Goal:** Implement the mathematical foundation for analyzing fittings and calculating statistics based on player skills.
+-   **Requirements:**
+    1.  Fitting statistics calculation engine (DPS, EHP, capacitor, speed, agility).
+    2.  Skill validation system ensuring fittings match player capabilities.
+    3.  Module compatibility checking (slots, CPU, power grid, skill requirements).
+    4.  Basic fitting display with real-time statistics.
+    5.  Simple fitting editor for manual fitting creation and testing.
+    6.  Stacking penalty calculations for accurate module interactions.
+-   **Outcome:** Users can create basic fittings and see accurate statistics based on their skills.
+
+## Phase 3: Fitting Optimization Algorithms
+**Goal:** Develop the core intelligence for generating optimized fittings based on player skills and optimization targets.
+-   **Requirements:**
+    1.  Optimization algorithm framework for generating effective fittings.
+    2.  Multi-objective optimization supporting DPS/Tank/Utility balance.
+    3.  Skill-constrained fitting generation ensuring usability.
+    4.  Generation of 5 fitting variants across the DPS-to-Tank spectrum.
+    5.  Fitting effectiveness scoring and ranking system.
+    6.  Basic fitting recommendation display with statistics comparison.
+-   **Outcome:** Users can select a ship and receive 5 optimized fittings they can actually use.
+
+## Phase 4: Activity-Based Customization
+**Goal:** Implement activity-specific fitting customization for PvP, PvE, mining, and hauling scenarios.
+-   **Requirements:**
+    1.  Activity selection interface with intuitive categories and subcategories.
+    2.  Activity-specific optimization parameters and constraints.
+    3.  Enemy type analysis for PvE fitting optimization (damage types, ranges).
+    4.  PvP scenario handling (solo, small gang, fleet roles).
+    5.  Mining and hauling specialization with appropriate module selection.
+    6.  Context-aware fitting modifications based on selected activities.
+-   **Outcome:** Users get activity-specific fitting recommendations tailored to their intended gameplay.
+
+## Phase 5: Educational and Guidance Systems
+**Goal:** Add comprehensive explanations, skill analysis, and training recommendations to help players learn and improve.
+-   **Requirements:**
+    1.  Detailed fitting explanations showing why modules are chosen.
+    2.  Skill gap analysis comparing current vs. optimal fittings.
+    3.  Training plan generation with optimized skill sequences.
+    4.  Interactive tooltips and help system for game mechanics.
+    5.  Upgrade path visualization showing improvements from skill training.
+    6.  Common mistake detection and warning system.
+-   **Outcome:** Users understand their fittings and have clear paths for improvement through skill training.
+
+## Phase 6: Polish and Advanced Features
+**Goal:** Enhance user experience, add advanced functionality, and prepare for release.
+-   **Requirements:**
+    1.  Advanced fitting comparison tools with visual charts.
+    2.  Fitting save/load functionality with local storage.
+    3.  Export capabilities to game-compatible formats.
+    4.  Market integration showing module costs and availability.
+    5.  Performance optimization for large datasets and complex calculations.
+    6.  Comprehensive error handling and user feedback systems.
+    7.  User preferences and customization options.
+-   **Outcome:** Production-ready application with comprehensive fitting guidance for EVE Online players.
+
+# Logical Dependency Chain
+
+1.  **Data Foundation (Phase 1):**
+    -   ESI authentication and character data access.
+    -   SDE integration for ship and module information.
+    -   Basic UI framework for displaying game data.
+
+2.  **Calculation Engine (Phase 2):**
+    -   Builds on cached game data to provide accurate fitting statistics.
+    -   Enables skill-aware fitting validation and analysis.
+    -   Provides foundation for optimization algorithms.
+
+3.  **Core Intelligence (Phase 3):**
+    -   Uses calculation engine to generate optimized fittings.
+    -   Leverages skill validation to ensure usable recommendations.
+    -   Creates the primary value proposition of the application.
+
+4.  **Specialization (Phase 4):**
+    -   Builds on core optimization to provide activity-specific recommendations.
+    -   Enhances the value and applicability of generated fittings.
+
+5.  **Education (Phase 5):**
+    -   Uses all previous systems to provide comprehensive learning experience.
+    -   Transforms the app from a tool into a teacher.
+
+6.  **Refinement (Phase 6):**
+    -   Polishes and enhances all previous functionality.
+    -   Adds convenience features and prepares for production release.
+
+**Guiding Principle:** Build a solid data and calculation foundation first, then add intelligence and specialization, finally focusing on user experience and education to create a comprehensive learning tool for EVE Online fitting.
+
+# Risks and Mitigations
+
+## Technical Challenges
+
+**Complex Optimization Algorithms:**
+-   **Risk:** Generating truly optimal fittings requires sophisticated algorithms that balance multiple objectives while respecting numerous constraints.
+-   **Mitigation:** Start with simpler heuristic approaches and iteratively improve. Research existing fitting optimization techniques. Focus on "good enough" recommendations initially, then enhance accuracy over time.
+
+**EVE Online Game Complexity:**
+-   **Risk:** EVE's fitting mechanics involve complex interactions, stacking penalties, skill bonuses, and edge cases that could lead to incorrect recommendations.
+-   **Mitigation:** Extensive testing against known good fittings. Implement comprehensive unit tests for calculation engines. Study existing tools and community knowledge. Start with simpler ships and gradually handle more complex cases.
+
+**Performance with Large Datasets:**
+-   **Risk:** Optimization algorithms may be computationally intensive, especially when considering thousands of possible module combinations.
+-   **Mitigation:** Implement intelligent pruning of search space. Use caching for repeated calculations. Consider background processing for complex optimizations. Profile performance regularly and optimize bottlenecks.
+
+## Figuring out the MVP that we can build upon
+
+**Defining "Good Enough" Recommendations:**
+-   **Risk:** Setting the bar too high for initial recommendations could delay delivery, while setting it too low could provide little value to users.
+-   **Mitigation:** Focus on basic PvE fittings first (simpler optimization targets). Get user feedback early and iterate. Implement simple optimization before complex multi-objective algorithms.
+
+**Scope Management:**
+-   **Risk:** EVE Online has many ship classes, activities, and edge cases that could lead to scope creep and indefinite development.
+-   **Mitigation:** Start with a subset of popular ships and common activities. Define clear success criteria for each phase. Resist feature creep until core functionality is solid.
+
+## Resource Constraints
+
+**Algorithm Development Expertise:**
+-   **Risk:** Optimization algorithms require specialized knowledge that may not be immediately available to the development team.
+-   **Mitigation:** Start with simple rule-based approaches. Research academic papers and existing implementations. Consider consulting with EVE Online community experts. Build incrementally from basic to advanced algorithms.
+
+**Game Knowledge Requirements:**
+-   **Risk:** Effective fitting recommendations require deep understanding of EVE Online mechanics and meta.
+-   **Mitigation:** Engage with the EVE Online community early for feedback. Study existing tools and their approaches. Test recommendations against known effective fittings. Implement feedback mechanisms for user corrections.
+
+**Testing and Validation:**
+-   **Risk:** Validating that recommendations are actually good requires extensive testing across many scenarios and ship types.
+-   **Mitigation:** Implement automated testing against known benchmarks. Create test cases for common scenarios. Plan for community beta testing. Build metrics to measure recommendation effectiveness.
+
+# Appendix
+
+## Research Findings
+
+**Existing Tools Analysis:**
+-   **Pyfa:** Provides manual fitting with good statistics but no automatic optimization. Complex interface overwhelming for new players.
+-   **EVE Fitting Tool (EFT):** Legacy tool with basic functionality but no modern features or guidance.
+-   **Various Web Tools:** Limited offline capability and no skill-based optimization.
+-   **Opportunity Gap:** No existing tool provides skill-aware automatic fitting optimization with educational guidance.
+
+**Optimization Approach Research:**
+-   **Multi-Objective Optimization:** Techniques like NSGA-II could handle DPS/Tank/Utility trade-offs effectively.
+-   **Constraint Satisfaction:** Essential for handling skill requirements, slot limitations, and resource constraints.
+-   **Heuristic Methods:** Genetic algorithms or particle swarm optimization could efficiently explore large fitting spaces.
+
+## Technical Specifications
+
+**Core Technologies:**
+-   **.NET 8** with WPF for rich desktop experience
+-   **MaterialDesignInXAML** for modern, clean user interface
+-   **LiteDB** for efficient local caching and data storage
+-   **ESI API** integration for character data and market information
+
+**Performance Targets:**
+-   **Fitting Generation:** Under 5 seconds for 5 optimized fittings
+-   **UI Responsiveness:** Sub-100ms response to user interactions
+-   **Memory Usage:** Under 500MB for typical usage scenarios
+-   **Startup Time:** Under 10 seconds including cache validation
+
+**Deployment Strategy:**
+-   **Self-contained deployment** with .NET 8 runtime included
+-   **MSIX packaging** for modern Windows installation experience
+-   **Automatic updates** for game data and application improvements
+-   **Offline capability** for previously cached data and calculations
+
+## Success Metrics
+
+**User Engagement:**
+-   Users generate and use recommended fittings successfully
+-   Positive feedback on fitting effectiveness in actual gameplay
+-   Measurable improvement in new player ship fitting confidence
+
+**Technical Performance:**
+-   Fitting generation within performance targets
+-   Stable operation across different character skill levels
+-   Accurate calculations verified against known benchmarks
+
+**Educational Impact:**
+-   Users report better understanding of fitting principles
+-   Reduced questions about basic fitting in community forums
+-   Positive feedback on learning experience and progression guidance

@@ -1,0 +1,61 @@
+# Task ID: 1
+# Title: Setup Project Architecture and Foundation
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Create the multi-layered WPF application structure with proper separation of concerns following the specified architecture
+# Details:
+Create solution with four projects: EveHelper.App (WPF UI), EveHelper.Services (Business Logic), EveHelper.Core (Models & Interfaces), EveHelper.Data (Data Access). Setup dependency injection container, configure MaterialDesignInXAML for modern UI styling, implement MVVM pattern with ViewModels and Views, and establish navigation services. Include NuGet packages: MaterialDesignThemes, Microsoft.Extensions.DependencyInjection, LiteDB for local storage.
+
+# Test Strategy:
+Verify project builds successfully, all layers can communicate through dependency injection, MaterialDesign themes load correctly, and basic navigation between views works without errors.
+
+# Subtasks:
+## 1. Create Solution Structure with Four Projects [done]
+### Dependencies: None
+### Description: Set up the Visual Studio solution with the four specified projects and establish proper references between them
+### Details:
+Create a new Visual Studio solution named 'EveHelper'. Add four projects: EveHelper.App (WPF), EveHelper.Services (Class Library), EveHelper.Core (Class Library), and EveHelper.Data (Class Library). Set up project references: App references Services and Core; Services references Core and Data; Data references Core. Create basic folder structure in each project (Models, Interfaces, ViewModels, Views, etc. as appropriate).
+<info added on 2025-06-05T12:29:32.387Z>
+Successfully created solution structure: EveHelper.sln with 4 projects (App-WPF, Services, Core, Data), proper references (App->Services+Core, Services->Core+Data, Data->Core), folder structure in each project, and verified successful build with no errors. Foundation architecture is ready for next subtask.
+</info added on 2025-06-05T12:29:32.387Z>
+
+## 2. Install and Configure NuGet Packages [done]
+### Dependencies: 1.1
+### Description: Add all required NuGet packages to the appropriate projects and ensure compatibility
+### Details:
+Install MaterialDesignThemes to EveHelper.App; Microsoft.Extensions.DependencyInjection to EveHelper.App and EveHelper.Services; LiteDB to EveHelper.Data. Add any additional supporting packages like Microsoft.Extensions.DependencyInjection.Abstractions to Core. Create a packages.config or use PackageReference format depending on project SDK. Verify package versions are compatible.
+<info added on 2025-06-05T12:31:09.941Z>
+Package installation completed successfully. All NuGet packages installed with compatible versions: MaterialDesignThemes v5.2.1 (App), Microsoft.Extensions.DependencyInjection v9.0.5 (App, Services), LiteDB v5.0.21 (Data), and Microsoft.Extensions.DependencyInjection.Abstractions v9.0.5 (Core). Solution builds without errors or warnings.
+</info added on 2025-06-05T12:31:09.941Z>
+
+## 3. Implement Dependency Injection Container [done]
+### Dependencies: 1.1, 1.2
+### Description: Set up the DI container and register all services and repositories
+### Details:
+Create ServiceCollection extension methods in each project to register their services. In EveHelper.App, create a Startup.cs class that configures the ServiceCollection and builds the ServiceProvider. Register all services with appropriate lifetimes (Singleton, Scoped, Transient). Create interfaces in Core project for all services. Implement service location in App.xaml.cs for application-wide access to the DI container.
+<info added on 2025-06-05T12:36:03.048Z>
+Successfully completed DI container implementation. ServiceCollection extension methods created in Core, Data, and Services projects for service registration. App.xaml.cs configured with static ServiceProvider and GetService method for application-wide DI access. Basic interfaces (IDataService, INavigationService) implemented in Core project. Solution builds and runs with DI container properly initialized and functional.
+</info added on 2025-06-05T12:36:03.048Z>
+
+## 4. Configure MaterialDesignInXAML and Basic UI Structure [done]
+### Dependencies: 1.2
+### Description: Set up the MaterialDesign theme and create the basic UI shell with resource dictionaries
+### Details:
+In App.xaml, merge the MaterialDesign ResourceDictionaries. Create a custom theme with primary and accent colors. Set up a MainWindow with a basic layout including navigation area and content area. Create resource dictionaries for common styles, templates, and converters. Implement basic controls showcase to verify MaterialDesign is working correctly. Configure dark/light theme switching capability.
+<info added on 2025-06-05T12:39:39.657Z>
+Successfully configured MaterialDesignInXAML theme and basic UI structure: Added MaterialDesign resource dictionaries to App.xaml with custom EVE Online color scheme (orange, gold, black, gray). Created CommonStyles.xaml with custom button, card, text, and input styles. Updated MainWindow.xaml with comprehensive layout including top app bar, navigation panel, content area, and status bar. Implemented MaterialDesign components (ColorZone, Card, PackIcon, Chip) with proper theming. Application builds and runs successfully with modern Material Design UI.
+</info added on 2025-06-05T12:39:39.657Z>
+<info added on 2025-06-05T12:39:48.243Z>
+The user request appears to be describing work that has already been completed and documented in the existing subtask details. The information provided matches what is already recorded in the subtask's details from the previous update on 2025-06-05T12:39:39.657Z. No new information is being provided that would warrant an additional update to the subtask details.
+</info added on 2025-06-05T12:39:48.243Z>
+
+## 5. Implement MVVM Pattern and Navigation Service [done]
+### Dependencies: 1.3, 1.4
+### Description: Create the MVVM infrastructure and navigation system for the application
+### Details:
+Create a BaseViewModel class in Core with INotifyPropertyChanged implementation. Implement a ViewModelLocator for XAML binding. Create a NavigationService interface in Core and implementation in Services that handles view/viewmodel resolution and navigation. Implement a basic command infrastructure (RelayCommand). Create sample views and viewmodels to test navigation. Set up the main application frame and navigation container in MainWindow.
+<info added on 2025-06-05T12:59:29.938Z>
+MVVM Implementation Complete - Successfully implemented comprehensive MVVM architecture with BaseViewModel, RelayCommand, NavigationService, ViewModelLocator, sample HomeViewModel/HomeView, DI integration, and MainWindow navigation setup. All components working together with Material Design theming. Ready for EVE Online feature implementation.
+</info added on 2025-06-05T12:59:29.938Z>
+

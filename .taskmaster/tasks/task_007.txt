@@ -1,0 +1,43 @@
+# Task ID: 7
+# Title: Implement Multi-Objective Fitting Optimization Algorithm
+# Status: pending
+# Dependencies: 5
+# Priority: high
+# Description: Develop intelligent fitting generation system creating 5 optimized fittings across DPS-to-Tank spectrum based on player skills
+# Details:
+Implement multi-objective optimization algorithm (consider NSGA-II or similar) balancing DPS, survivability, and utility. Create constraint satisfaction system handling skill requirements, slot limitations, CPU/Power restrictions. Generate 5 fitting variants: Max DPS, DPS-focused, Balanced, Tank-focused, Max Tank. Include skill-aware module selection ensuring player can use all recommended modules. Implement fitting scoring system evaluating effectiveness for different objectives. Add explanation system describing each fitting's design philosophy and trade-offs.
+
+# Test Strategy:
+Verify generated fittings are valid and usable by character, test optimization produces meaningful variety across DPS-Tank spectrum, validate fittings perform well in their intended roles, and confirm explanations accurately describe fitting characteristics.
+
+# Subtasks:
+## 1. Implement Multi-Objective Optimization Algorithm Core [pending]
+### Dependencies: None
+### Description: Implement the core NSGA-II (or similar) algorithm to handle multi-objective optimization across DPS, survivability, and utility metrics.
+### Details:
+Create a generic optimization framework using NSGA-II algorithm with population initialization, non-dominated sorting, crowding distance calculation, and selection operators. Define objective functions for DPS (damage output), survivability (tank metrics), and utility (e-war, capacitor stability, etc.). Implement chromosome representation for ship fittings with appropriate crossover and mutation operators. Ensure the algorithm can generate a Pareto front of solutions representing different trade-offs between objectives.
+
+## 2. Develop Constraint Satisfaction System [pending]
+### Dependencies: 7.1
+### Description: Create a system to enforce fitting constraints including slot limitations, CPU/Power restrictions, and skill requirements.
+### Details:
+Implement constraint validators for: powergrid usage, CPU usage, slot allocation (high/mid/low/rig), fitting restrictions (ship-specific module limitations), and skill prerequisites. Create repair operators that can fix invalid fittings by replacing modules or downgrading to less demanding alternatives. Develop a penalty function approach to guide the optimization algorithm away from invalid solutions. Implement efficient constraint checking to minimize performance impact during optimization.
+
+## 3. Implement Skill-Aware Module Selection System [pending]
+### Dependencies: 7.2
+### Description: Create a system that selects modules based on player's current skills, ensuring all recommended modules can be used by the player.
+### Details:
+Develop a module database with skill requirements for each module. Implement a player skill profile parser to extract relevant skills. Create a filtering mechanism that only considers modules the player can use during optimization. Implement a recommendation system for skills to train when better modules are available but skill-locked. Design fallback logic to select alternative modules when optimal choices are unavailable due to skill limitations.
+
+## 4. Create Fitting Variant Generator [pending]
+### Dependencies: 7.1, 7.2, 7.3
+### Description: Implement a system to generate the 5 distinct fitting variants (Max DPS, DPS-focused, Balanced, Tank-focused, Max Tank) from the optimization results.
+### Details:
+Develop a selection algorithm to extract representative solutions from the Pareto front for each fitting variant. Implement specific objective weightings for each variant type. Create a post-processing system to refine each variant for its intended role. Ensure each variant maintains internal synergy between modules. Implement a diversity check to ensure the 5 variants are sufficiently different from each other to provide meaningful choices.
+
+## 5. Implement Fitting Scoring and Explanation System [pending]
+### Dependencies: 7.4
+### Description: Create a system to score each fitting variant and generate explanations of design philosophy and trade-offs.
+### Details:
+Develop scoring metrics for different aspects of ship performance (DPS, tank, utility, etc.). Implement comparative scoring to show relative strengths between variants. Create a template-based explanation system that describes the fitting's focus, key modules, and tactical approach. Generate trade-off explanations highlighting what was sacrificed for the fitting's strengths. Include skill improvement recommendations to enhance the fitting's performance. Implement visualization components to display scores and comparisons in an intuitive way.
+

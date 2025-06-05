@@ -1,0 +1,46 @@
+# Task ID: 2
+# Title: Implement EVE Online ESI Authentication and Character Data Access
+# Status: in-progress
+# Dependencies: 1
+# Priority: high
+# Description: Integrate secure OAuth 2.0 PKCE authentication with EVE Online ESI API to retrieve character information and skills
+# Details:
+Implement OAuth 2.0 PKCE flow following EVE Developer Documentation guidelines. Create ESI client service with HttpClient for API calls, secure token storage with automatic refresh, character selection interface for multi-character support. Retrieve character skills, skill queue, and basic character information via ESI endpoints. Handle rate limiting with intelligent request queuing and respect ESI cache headers. Store tokens securely using Windows Credential Manager or encrypted local storage.
+
+# Test Strategy:
+Test authentication flow with real EVE Online accounts, verify token refresh works automatically, confirm character data retrieval matches in-game information, and validate rate limiting compliance with ESI guidelines.
+
+# Subtasks:
+## 1. Implement OAuth 2.0 PKCE Authentication Flow [done]
+### Dependencies: None
+### Description: Create the OAuth 2.0 PKCE authentication flow for EVE Online ESI API following the EVE Developer Documentation guidelines
+### Details:
+Generate code verifier and challenge, construct authorization URL with required scopes, implement redirect handler to capture authorization code, exchange code for access and refresh tokens, validate token response, and handle initial token storage
+<info added on 2025-06-05T13:09:33.024Z>
+OAuth 2.0 PKCE Implementation Complete - Successfully implemented comprehensive OAuth 2.0 PKCE authentication flow including: Core Authentication Models (EveAuthConfiguration, EveToken with JWT parsing, PkceData, AuthenticationResult), PKCE Security Implementation (PkceHelper with cryptographically secure code generation, SHA256 code challenge, state parameter for CSRF protection), EVE Authentication Service (complete IEveAuthService implementation, StartAuthenticationAsync, CompleteAuthenticationAsync with validation, RefreshTokenAsync, JWT parsing for character info, comprehensive error handling), OAuth Callback Handler (OAuthCallbackListener with HttpListener, styled success/error pages, automatic browser closure, robust query parsing), Dependency Injection (registered EveAuthService with HttpClient factory, configured default settings, added required NuGet packages), Security Features (CSRF protection, secure PKCE implementation, JWT validation, proper token expiration handling). The OAuth 2.0 PKCE flow is now fully functional and ready for UI integration.
+</info added on 2025-06-05T13:09:33.024Z>
+
+## 2. Develop Secure Token Storage and Refresh System [pending]
+### Dependencies: 2.1
+### Description: Create a secure system for storing authentication tokens using Windows Credential Manager or encrypted local storage with automatic refresh capability
+### Details:
+Implement token encryption/decryption, store tokens securely in Windows Credential Manager or encrypted local storage, create token refresh mechanism that triggers before expiration, handle refresh failures gracefully, implement token revocation on logout
+
+## 3. Build ESI Client Service with HttpClient [pending]
+### Dependencies: 2.2
+### Description: Create a reusable ESI client service using HttpClient for making authenticated API calls to the EVE Online ESI endpoints
+### Details:
+Implement HttpClient factory with appropriate headers and configuration, create methods for GET/POST/PUT/DELETE requests, add authentication token injection, implement response parsing and error handling, respect ESI cache headers
+
+## 4. Implement Character Selection Interface [pending]
+### Dependencies: 2.2
+### Description: Create a user interface for selecting and managing multiple EVE Online characters with their associated authentication tokens
+### Details:
+Design character selection UI component, implement character addition workflow, create character removal functionality, store character-token associations, handle default character selection, display basic character information (name, portrait, corporation)
+
+## 5. Develop Character Data Retrieval Services [pending]
+### Dependencies: 2.3, 2.4
+### Description: Create services to retrieve and process character information, skills, and skill queue data from ESI endpoints with rate limiting support
+### Details:
+Implement intelligent request queuing system respecting ESI rate limits, create methods for retrieving character information, skills data, and skill queue, process and transform API responses into application models, implement error handling for failed requests, add caching layer respecting ESI cache headers
+

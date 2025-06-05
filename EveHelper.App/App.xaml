@@ -1,0 +1,26 @@
+﻿<Application x:Class="EveHelper.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:EveHelper.App"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Material Design -->
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                
+                <!-- Custom Styles -->
+                <ResourceDictionary Source="Styles/CommonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Custom Colors for EVE Online Theme -->
+            <SolidColorBrush x:Key="EveOrangeBrush" Color="#FF8C4A"/>
+            <SolidColorBrush x:Key="EveGoldBrush" Color="#FFD700"/>
+            <SolidColorBrush x:Key="EveBlackBrush" Color="#1A1A1A"/>
+            <SolidColorBrush x:Key="EveGrayBrush" Color="#2D2D2D"/>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

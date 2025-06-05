@@ -1,0 +1,43 @@
+# Task ID: 4
+# Title: Build Ship Browser and Search System
+# Status: pending
+# Dependencies: 2, 3
+# Priority: medium
+# Description: Create comprehensive ship browsing interface with filtering, search, and detailed ship information display
+# Details:
+Implement ship browser with hierarchical navigation by ship class, faction, and role. Add advanced filtering system supporting multiple criteria: ship attributes (speed, cargo, slots), skill requirements, market groups. Create search functionality with auto-complete and fuzzy matching. Display detailed ship information including base stats, slot configurations, skill prerequisites with current character skill validation. Show ship comparison tools for side-by-side evaluation. Integrate ship images from EVE Image Server with lazy loading and caching.
+
+# Test Strategy:
+Test filtering and search return accurate results, ship details match SDE data, skill requirement validation works with character data, comparison tools show meaningful differences, and images load efficiently with proper fallbacks.
+
+# Subtasks:
+## 1. Implement Hierarchical Ship Navigation UI [pending]
+### Dependencies: None
+### Description: Create a user interface for browsing ships organized by class, faction, and role
+### Details:
+Develop a tree-like navigation structure that organizes ships by class (Frigate, Cruiser, etc.), faction (Amarr, Caldari, etc.), and role (Combat, Mining, etc.). Implement collapsible sections for each category. Ensure smooth transitions between navigation levels and maintain state when users navigate back. Include visual indicators for ship counts within each category.
+
+## 2. Build Advanced Ship Filtering System [pending]
+### Dependencies: 4.1
+### Description: Create a filtering system supporting multiple criteria including ship attributes, skill requirements, and market groups
+### Details:
+Implement filter controls for ship attributes (speed, cargo capacity, slot configurations), skill requirements (minimum skills needed), and market groups. Support multiple simultaneous filter criteria with AND/OR logic. Create slider controls for numeric ranges and dropdown/checkbox selectors for categorical filters. Add filter presets for common queries and allow users to save custom filter configurations.
+
+## 3. Develop Ship Search Functionality [pending]
+### Dependencies: 4.1
+### Description: Implement search with auto-complete suggestions and fuzzy matching capabilities
+### Details:
+Create a search input field with real-time suggestions as users type. Implement fuzzy matching to handle typos and partial matches. Include search history and popular searches. Support advanced search syntax for power users (e.g., quotation marks for exact matches, minus sign to exclude terms). Highlight matching terms in search results. Optimize search performance for quick response times.
+
+## 4. Create Detailed Ship Information Display [pending]
+### Dependencies: 4.1
+### Description: Design and implement a comprehensive ship details view showing stats, configurations, and skill prerequisites
+### Details:
+Develop a detailed ship information panel showing base statistics (speed, agility, cargo capacity), slot configurations (high/mid/low slots, rig slots), and skill prerequisites. Compare current character skills against requirements with visual indicators. Include ship bonuses, traits, and role information. Add tabs for different information categories (attributes, fitting, skills, etc.). Implement tooltips for technical terms and attributes.
+
+## 5. Implement Ship Comparison Tools with Image Integration [pending]
+### Dependencies: 4.4
+### Description: Create side-by-side ship comparison functionality with integrated ship imagery from EVE Image Server
+### Details:
+Build a comparison interface allowing users to select multiple ships for side-by-side evaluation. Highlight differences between ships with visual cues. Integrate ship images from EVE Image Server with lazy loading for performance and local caching to reduce bandwidth. Implement image fallbacks for unavailable images. Allow users to save comparison results and share via links. Support comparing up to 4 ships simultaneously with responsive layout adjustments.
+
