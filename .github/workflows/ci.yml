@@ -27,6 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install glib-2.0
+        run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -62,6 +64,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install glib-2.0
+        run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
