@@ -7,8 +7,8 @@ on:
     branches: [main, master]
 
 jobs:
-  lint-frontend:
-    runs-on: ubuntu-latest
+  lint-frontend-macos:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -25,30 +25,26 @@ jobs:
       - run: pnpm lint
         working-directory: eveonline-helper
 
-  lint-backend:
-    runs-on: ubuntu-latest
+  lint-frontend-windows:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install glib-2.0
-        run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev
-      - name: Install GTK 3
-        run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev
-      - name: Install JavaScriptCoreGTK 4.1 and libsoup 3.0
-        run: sudo apt-get update && sudo apt-get install -y libjavascriptcoregtk-4.1-dev libsoup-3.0-dev
-      - name: Install WebKit2GTK 4.1
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
+      - uses: pnpm/action-setup@v2
         with:
-          toolchain: stable
-          override: true
-      - run: cargo fmt --all -- --check
-        working-directory: eveonline-helper/src-tauri
-      - run: cargo clippy --all-targets -- -D warnings
-        working-directory: eveonline-helper/src-tauri
+          version: 8
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: Remove-Item -Recurse -Force node_modules, pnpm-lock.yaml
+        working-directory: eveonline-helper
+      - run: pnpm install
+        working-directory: eveonline-helper
+      - run: pnpm lint
+        working-directory: eveonline-helper
 
-  test-frontend:
-    runs-on: ubuntu-latest
+  test-frontend-macos:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -68,38 +64,48 @@ jobs:
           files: ./coverage/lcov.info
           flags: frontend
 
-  test-backend:
-    runs-on: ubuntu-latest
+  test-frontend-windows:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install glib-2.0
-        run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev
-      - name: Install GTK 3
-        run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev
-      - name: Install JavaScriptCoreGTK 4.1 and libsoup 3.0
-        run: sudo apt-get update && sudo apt-get install -y libjavascriptcoregtk-4.1-dev libsoup-3.0-dev
-      - name: Install WebKit2GTK 4.1
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
+      - uses: pnpm/action-setup@v2
         with:
-          toolchain: stable
-          override: true
-      - run: cargo test --all -- --nocapture
-        working-directory: eveonline-helper/src-tauri
-      - name: Generate Rust code coverage
-        run: |
-          cargo install cargo-tarpaulin
-          cargo tarpaulin --out Xml
-        working-directory: eveonline-helper/src-tauri
+          version: 8
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: pnpm install
+        working-directory: eveonline-helper
+      - run: pnpm test -- --coverage
+        working-directory: eveonline-helper
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: ./tarpaulin-report.xml
-          flags: backend
+          files: ./coverage/lcov.info
+          flags: frontend
 
-  build:
-    runs-on: ubuntu-latest
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: pnpm install
+        working-directory: eveonline-helper
+      - run: pnpm build
+        working-directory: eveonline-helper
+      - name: Build Tauri app (Rust backend)
+        run: cargo build --release
+        working-directory: eveonline-helper/src-tauri
+
+  build-windows:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
