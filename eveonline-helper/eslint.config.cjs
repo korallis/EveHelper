@@ -1,7 +1,7 @@
 /**
  * @type {import('eslint').FlatConfig}
  */
-export default [
+module.exports = [
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
