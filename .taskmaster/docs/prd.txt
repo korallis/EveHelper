@@ -1,0 +1,195 @@
+# Ship Fitting Recommendation App PRD (2025 Edition, GitHub + Cursor IDE Integration)
+
+## Executive Summary
+
+This Product Requirement Document (PRD) defines a self-contained, cross-platform desktop application for EVE Online ship fitting recommendations, specifically designed for new and intermediate players. The app runs on macOS (Sonoma/Sequoia, M4 Pro) and Windows 11+, with a zero-friction installation and authentication process. It leverages the latest LTS frameworks (Tauri, Rust, React, Tailwind, SQLite), rigorous best practices, and deep GitHub and Cursor IDE integrations to maximize developer productivity and code quality. No code signing or developer certificate is required for end users. The app emphasizes privacy, offline capability, and a seamless "download, run, click login" experience.
+
+---
+
+## Features
+
+- **Cross-Platform Desktop**: Native support for macOS (Sonoma/Sequoia, ARM64) and Windows 11+, with a single codebase.
+- **Zero-Friction Installation**: Unsigned, portable app distribution—no developer account, no installer, no technical steps for end users.
+- **Seamless EVE SSO Login**: One-click "Login with EVE" using secure OAuth2 PKCE, with system browser and automatic callback handling.
+- **Offline-First Architecture**: Full functionality (fit recommendations, stats, skill plans) available offline; only ESI sync and updates require network.
+- **Skill-Based Fit Recommendations**: Personalized ship fittings based on player skill profiles and targeted activities.
+- **Activity Templates**: Recommendations for Mission Running, Logistics, Mining, PVP, Exploration, and more, with activity-specific logic and progression.
+- **Fit Validation & Alternatives**: Automatic checks for powergrid/CPU/slots/skills, with alternatives suggested for missing requirements.
+- **Optimized Skill Plan Generation Algorithm**:  
+  - For any recommended ship and fit (based on the user's current skills and chosen activity), the app generates a prioritized skill plan that maximizes the effectiveness of the recommended fit and activity.
+  - The algorithm suggests a clear, step-by-step skill queue that first unlocks the immediate recommended fit, then proposes a follow-up "progression" plan tailored to the user's chosen activity—for example, from Cruiser to Battlecruiser or T2 Cruiser, with appropriate support skills.
+  - Progression plans are dynamic, adapting to both the user's current skills and declared activity focus (e.g., PVP, Missions, Mining, Logistics, Exploration), ensuring optimal long-term development for new/intermediate players.
+  - Both immediate and next-step skill plans are exportable and visualized within the app.
+- **Ship Recommendation Engine with Multi-Fit Analysis**:
+  - For DPS-oriented activities (Mission Running, PVP, etc.), the app recommends **five distinct fits** per ship, ranging from Maximum DPS to Maximum Tank, with a spectrum of hybrid fits (balanced, cap-stable, etc.) in between.
+  - For other activities (Mining, Logistics, Exploration), the app determines the **five most optimal fits** for the selected activity type, prioritizing the key metrics relevant to that activity (e.g., mining yield, scan strength, repair output).
+  - Each recommendation is tailored to the user's current skill set and activity selection, with fit rationale and expected performance clearly explained.
+- **Skill Progression Planning**: Visual timelines and EVEMon-compatible skill plan export to help users reach fitting goals.
+- **Local, Encrypted Data Storage**: Securely stores all user data and static ship/module info using encrypted SQLite.
+- **Modern, Responsive UI**: Professional design using React 19 and Tailwind CSS 4, with accessibility and keyboard navigation.
+- **Secure Token Handling**: All sensitive ESI tokens and credentials are stored in OS-native keychain/credential manager, never exposed to frontend.
+- **No Telemetry/Tracking**: Privacy-first, no analytics or third-party data collection.
+- **GitHub Integration**: Source, issues, pull requests, and releases managed in GitHub. Release builds distributed via GitHub Releases.
+- **Cursor IDE Automation**: Codebase maintained and refactored with best practices using Cursor IDE's GitHub integration and Agent Mode.
+- **Built-In Documentation**: In-app onboarding, troubleshooting, and step-by-step unsigned app launch guides for macOS.
+- **Auto-Update Ready**: Optional Tauri updater integration for future seamless updates.
+- **Comprehensive Testing**: >80% code coverage, enforced by GitHub Actions and CI/CD workflows.
+
+---
+
+## Key Enhancements
+
+- **GitHub Integration:**  
+  - All source code, issues, and pull requests are managed via GitHub, enabling transparent collaboration, CI/CD, and version control.
+  - Cursor IDE's built-in GitHub integration is used for code navigation, reviews, and AI-powered refactoring.
+  - Release artifacts (unsigned .app/.exe) are distributed via GitHub Releases.
+  - Documentation, changelogs, and onboarding guides are maintained in the repository for community contribution.
+
+- **Cursor IDE Automation:**  
+  - Use Cursor's Agent Mode for intelligent code generation, refactoring, and enforcement of best practices across Rust, React, Tailwind, and Tauri.
+  - All contributors use Cursor's GitHub-linked workflows for PR reviews and code suggestions.
+
+---
+
+## Target Users
+
+- **Primary:** New EVE Online players (0–6 months) needing clear, skill-based fit recommendations.
+- **Secondary:** Intermediate players (6–18 months) optimizing or expanding their activity portfolio.
+
+---
+
+## Best Practices for Technology Stack
+
+### Tauri (2.x, LTS)
+
+- Use the official [Tauri best practices](https://tauri.app/v2/guides/) for security, API isolation, and binary packaging.
+- Rust backend handles OS integration, local file access, and secure PKCE OAuth2 flows.
+- Leverage Tauri's built-in updater for optional future auto-update support.
+
+### Rust (1.80+, LTS)
+
+- Enforce strict linting with `clippy` and format with `rustfmt`.
+- Use `sqlx` or `rusqlite` for type-safe, performant SQLite interactions.
+- All secrets and tokens handled only in the Rust backend.
+
+### React (19.x, LTS)
+
+- Use functional components and hooks exclusively.
+- Enforce code splitting and lazy loading for optimal performance.
+- Use [React best practices](https://react.dev/learn/reusing-logic-with-custom-hooks) for state management and effect isolation.
+
+### Tailwind CSS (4.x, LTS)
+
+- Use utility-first design for all UI components.
+- Enforce design consistency via Tailwind's configuration and shared style guides.
+- Integrate with React via official [Tailwind best practices](https://tailwindcss.com/docs/reusing-styles).
+
+### SQLite (3.46+, LTS)
+
+- Use encrypted local database for all static and user data.
+- Migrate and validate schema via Rust backend on first launch.
+- No external database or cloud storage; 100% offline-first.
+
+### GitHub & Cursor IDE
+
+- All code and issues in a public or private GitHub repo.
+- CI/CD with GitHub Actions for automatic lint/test/build on all PRs.
+- Release builds (unsigned) uploaded to GitHub Releases.
+- Cursor's IDE GitHub integration for branch management, code reviews, and automated refactors.
+- Use GitHub Discussions for feedback and user support.
+
+---
+
+## User Experience Highlights
+
+- **First Launch:**  
+  - Download and run—no installer, no CLI, no code signing required.
+  - If unsigned on macOS, app shows an illustrated, step-by-step guide for bypassing Gatekeeper (tested on Sonoma/Sequoia).
+  - "Login with EVE" is the primary CTA, using secure PKCE OAuth2 via system browser and local callback.
+
+- **Core Features:**  
+  - Skill-based, activity-specific ship fit recommendations.
+  - For DPS and combat-focused activities, five fits are recommended per ship, ranging from Maximum DPS to Maximum Tank.
+  - For other activities, the five most optimal fits are recommended based on the user's chosen activity.
+  - Offline operation (all core features work without internet after initial SDE download).
+  - Privacy-first: No telemetry, no analytics, no third-party services except EVE SSO.
+
+---
+
+## Application Architecture
+
+```
+Tauri (Rust) Backend
+│
+├─ SQLite3 (encrypted local data)
+│
+├─ Secure PKCE OAuth2 (EVE SSO), OS keychain integration
+│
+└─ React 19 + Tailwind 4 UI (Vite-powered)
+```
+
+- All ESI token and sensitive logic runs in Rust backend, never exposed to frontend.
+- Frontend interacts with backend only via Tauri secure APIs.
+
+---
+
+## Implementation Workflow (With GitHub & Cursor)
+
+1. **Scaffolding**  
+   - Initialize Tauri/React/Tailwind project via Cursor IDE agent.
+   - Push to GitHub repo, set up Actions for lint/test/build.
+
+2. **Database & Static Data**  
+   - Implement encrypted SQLite schema in Rust.
+   - Import SDE to local DB at build-time.
+
+3. **Authentication**  
+   - Implement PKCE OAuth2 in Rust using system browser and localhost callback.
+   - Store tokens in OS keychain/credential manager.
+
+4. **Core Features**  
+   - ESI sync, fit calculation, and recommendations in Rust.
+   - React UI for activity selection, fit display, and skill progression.
+
+5. **Testing & QA**  
+   - Enforce 80%+ test coverage via GitHub Actions.
+   - Use Cursor's agent for code review suggestions and issue triage.
+
+6. **Distribution**  
+   - Build unsigned .app/.exe via GitHub Actions.
+   - Upload to GitHub Releases for public download.
+   - Documentation and onboarding guides in repo README and /docs.
+
+---
+
+## Security & Privacy
+
+- No user secrets or tokens in frontend code, ever.
+- All data encrypted at rest.
+- No code signing required; unsigned app distribution steps are illustrated for users.
+- No telemetry or tracking.
+
+---
+
+## Success Metrics
+
+- User can download, launch, and login in under 5 minutes (macOS and Windows, no developer account needed).
+- 100% of core features (fit recommendations, stats, skill plan export) work offline.
+- 80%+ unit/integration test coverage, all enforced via GitHub Actions.
+- PR reviews and code suggestions automated via Cursor IDE's GitHub integration.
+- Identical UX on Mac Mini M4 Pro and Windows 11+.
+
+---
+
+## References
+
+- [Tauri Best Practices](https://tauri.app/v2/guides/)
+- [React 19 Best Practices](https://react.dev/learn/reusing-logic-with-custom-hooks)
+- [Tailwind CSS Best Practices](https://tailwindcss.com/docs/reusing-styles)
+- [Rust Linting & Formatting](https://doc.rust-lang.org/book/ch11-03-test-organization.html)
+- [GitHub + Cursor IDE Workflow](https://www.cursor.so/docs/integrations/github)
+- [macOS Sonoma/Sequoia Unsigned App Bypass](https://iboysoft.com/tips/allow-apps-to-run-sequoia.html)
+
+---
+
+This PRD is rebuilt for 2025 with best practices, reproducible GitHub workflows, and seamless Cursor IDE integration, ensuring a reliable, privacy-safe, and effortless experience for both users and developers. 

@@ -1,0 +1,23 @@
+[package]
+name = "eveonline_helper"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tauri = "2"
+rusqlite = "0.31"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[dev-dependencies]
+# For linting and formatting
+clippy = "*"
+rustfmt = "*"
+# For live reload
+cargo-watch = "*"
+# For database migrations (choose one)
+sqlx-cli = "*"
+# rusqlite is already in dependencies
+
+[features]
+default = ["custom-protocol"] 

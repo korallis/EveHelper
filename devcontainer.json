@@ -1,0 +1,27 @@
+{
+  "name": "EveOnline Helper DevContainer",
+  "image": "mcr.microsoft.com/devcontainers/universal:2.0.0",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "1.80"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "matklad.rust-analyzer",
+        "tauri-apps.tauri-vscode",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "alexcvzz.vscode-sqlite",
+        "github.vscode-pull-request-github",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  },
+  "postCreateCommand": "npm install && rustup component add clippy rustfmt && cargo install cargo-watch"
+} 
