@@ -1,4 +1,4 @@
-import React from 'react';
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { ShipProgressionDisplay, ShipProgressionDisplayProps } from '../ShipProgressionDisplay';
 
@@ -31,7 +31,7 @@ describe('ShipProgressionDisplay', () => {
       required_skills: [
         [333, 'Spaceship Command', 5],
         [444, 'Engineering', 4],
-      ],
+      ] as [number, string, number][],
     };
     render(<ShipProgressionDisplay {...baseProps} progression={progression} />);
     expect(screen.getByText('Next Ship Progression')).toBeInTheDocument();

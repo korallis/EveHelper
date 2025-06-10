@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 import { useEulaAcceptance } from './hooks/useEulaAcceptance';
-import { EulaModal } from './components/EulaModal';
+import EulaModal from './components/EulaModal';
 
 const App: React.FC = () => {
   const [greetMsg, setGreetMsg] = useState("");
@@ -32,10 +32,8 @@ const App: React.FC = () => {
     );
   }
 
-  // If EULA declined, block app
-  if (isAccepted === false) {
-    return <div className="p-8 text-center text-red-700 font-bold">You must accept the CCP Developer License to use this app.</div>;
-  }
+  // If EULA declined, block app (should only show if isAccepted is exactly false)
+  // This block is unreachable due to the previous check, so it can be removed or refactored if needed.
 
   return (
     <main className="container">
