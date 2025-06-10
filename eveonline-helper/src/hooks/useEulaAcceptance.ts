@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 // @ts-ignore
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 
 /**
  * React hook to check and set EULA acceptance via Tauri backend

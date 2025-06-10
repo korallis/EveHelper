@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 // @ts-ignore
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 
 /**
  * React hook to detect if an automatic SDE update has occurred on startup.

@@ -6,7 +6,7 @@
  */
 import { useState, useCallback } from 'react';
 // @ts-ignore
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 
 /**
  * TypeScript type for a skill plan entry
