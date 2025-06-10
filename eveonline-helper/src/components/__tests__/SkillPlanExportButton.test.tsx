@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { SkillPlanExportButton } from '../SkillPlanExportButton';
 import * as skillPlanUtils from '../../hooks/useSkillPlan';
