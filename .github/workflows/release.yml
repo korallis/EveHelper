@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 20
       - run: pnpm install
-        working-directory: ${{ github.workspace }}
+        working-directory: eveonline-helper
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -27,7 +27,7 @@ jobs:
           override: true
       - name: Build Tauri app (macOS)
         run: pnpm tauri build
-        working-directory: ${{ github.workspace }}
+        working-directory: eveonline-helper/src-tauri
       - name: Upload macOS .app
         uses: actions/upload-artifact@v4
         with:
@@ -46,7 +46,7 @@ jobs:
         with:
           node-version: 20
       - run: pnpm install
-        working-directory: ${{ github.workspace }}
+        working-directory: eveonline-helper
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -54,7 +54,7 @@ jobs:
           override: true
       - name: Build Tauri app (Windows)
         run: pnpm tauri build
-        working-directory: ${{ github.workspace }}
+        working-directory: eveonline-helper/src-tauri
       - name: Upload Windows .exe
         uses: actions/upload-artifact@v4
         with:
