@@ -1,3 +1,4 @@
+const tsParser = require('@typescript-eslint/parser');
 /**
  * @type {import('eslint').FlatConfig}
  */
@@ -5,7 +6,7 @@ module.exports = [
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
-      parser: '@typescript-eslint/parser',
+      parser: tsParser,
       parserOptions: { project: './tsconfig.json' },
     },
     plugins: {

@@ -5,15 +5,15 @@
 //
 // Dependencies: oauth2, url, reqwest, tauri (for command exposure), keyring (for secure storage)
 
-use tauri::api::shell;
-use tauri::Window;
 use keyring::Entry;
 use reqwest::Client;
 use serde::Deserialize;
 use std::collections::HashMap;
-use std::time::{SystemTime, UNIX_EPOCH};
 use std::fs;
 use std::path::Path;
+use std::time::{SystemTime, UNIX_EPOCH};
+use tauri::api::shell;
+use tauri::Window;
 
 /// Configuration for EVE SSO OAuth2 endpoints and client credentials
 pub struct EveSsoConfig {
@@ -82,7 +82,7 @@ pub struct FitVariant {
     pub ship: Ship,
     pub modules: Vec<Module>,
     pub rationale: String, // Explanation for the fit
-    // Add more fields as needed (performance metrics, etc.)
+                           // Add more fields as needed (performance metrics, etc.)
 }
 
 /// Validation result for a fit
@@ -112,10 +112,7 @@ pub enum ShipTier {
 ///
 /// # Returns
 /// - FitValidation struct with validation results
-pub fn validate_fit(
-    fit: &FitVariant,
-    user_skills: &[Skill],
-) -> FitValidation {
+pub fn validate_fit(fit: &FitVariant, user_skills: &[Skill]) -> FitValidation {
     // TODO: Check powergrid, CPU, slot layout, and required skills
     // Populate missing_requirements and warnings as needed
     FitValidation {
@@ -142,10 +139,7 @@ pub fn handle_callback(
 }
 
 /// Refreshes the access token using the refresh token
-pub fn refresh_token(
-    config: &EveSsoConfig,
-    refresh_token: &str,
-) -> Result<TokenResponse, String> {
+pub fn refresh_token(config: &EveSsoConfig, refresh_token: &str) -> Result<TokenResponse, String> {
     // TODO: Implement token refresh logic
     Err("Not implemented".into())
 }
@@ -164,16 +158,22 @@ pub fn handle_local_callback(_window: &Window, _callback_url: &str) -> Result<St
 }
 
 /// Stores the ESI access and refresh tokens securely in the OS keychain
-pub fn store_tokens(user_id: &str, access_token: &str, refresh_token: Option<&str>) -> Result<(), String> {
+pub fn store_tokens(
+    user_id: &str,
+    access_token: &str,
+    refresh_token: Option<&str>,
+) -> Result<(), String> {
     let service = "eveonline-helper-esi";
     let access_entry = Entry::new(service, &format!("{}_access", user_id))
         .map_err(|e| format!("Keyring error: {}", e))?;
-    access_entry.set_password(access_token)
+    access_entry
+        .set_password(access_token)
         .map_err(|e| format!("Failed to store access token: {}", e))?;
     if let Some(refresh) = refresh_token {
         let refresh_entry = Entry::new(service, &format!("{}_refresh", user_id))
             .map_err(|e| format!("Keyring error: {}", e))?;
-        refresh_entry.set_password(refresh)
+        refresh_entry
+            .set_password(refresh)
             .map_err(|e| format!("Failed to store refresh token: {}", e))?;
     }
     Ok(())
@@ -184,7 +184,8 @@ pub fn get_tokens(user_id: &str) -> Result<(String, Option<String>), String> {
     let service = "eveonline-helper-esi";
     let access_entry = Entry::new(service, &format!("{}_access", user_id))
         .map_err(|e| format!("Keyring error: {}", e))?;
-    let access_token = access_entry.get_password()
+    let access_token = access_entry
+        .get_password()
         .map_err(|e| format!("Failed to retrieve access token: {}", e))?;
     let refresh_entry = Entry::new(service, &format!("{}_refresh", user_id))
         .map_err(|e| format!("Keyring error: {}", e))?;
@@ -196,28 +197,51 @@ pub fn get_tokens(user_id: &str) -> Result<(String, Option<String>), String> {
 }
 
 /// Fetch character info from ESI
-pub async fn fetch_character_info(access_token: &str, character_id: i64) -> Result<CharacterInfo, String> {
-    let url = format!("https://esi.evetech.net/latest/characters/{}/?datasource=tranquility", character_id);
+pub async fn fetch_character_info(
+    access_token: &str,
+    character_id: i64,
+) -> Result<CharacterInfo, String> {
+    let url = format!(
+        "https://esi.evetech.net/latest/characters/{}/?datasource=tranquility",
+        character_id
+    );
     let client = Client::new();
-    let resp = client.get(&url)
+    let resp = client
+        .get(&url)
         .bearer_auth(access_token)
-        .send().await
+        .send()
+        .await
         .map_err(|e| format!("Failed to fetch character info: {}", e))?;
-    resp.json::<CharacterInfo>().await.map_err(|e| format!("Failed to parse character info: {}", e))
+    resp.json::<CharacterInfo>()
+        .await
+        .map_err(|e| format!("Failed to parse character info: {}", e))
 }
 
 /// Fetch character skills from ESI
-pub async fn fetch_character_skills(access_token: &str, character_id: i64) -> Result<Vec<Skill>, String> {
-    let url = format!("https://esi.evetech.net/latest/characters/{}/skills/?datasource=tranquility", character_id);
+pub async fn fetch_character_skills(
+    access_token: &str,
+    character_id: i64,
+) -> Result<Vec<Skill>, String> {
+    let url = format!(
+        "https://esi.evetech.net/latest/characters/{}/skills/?datasource=tranquility",
+        character_id
+    );
     let client = Client::new();
-    let resp = client.get(&url)
+    let resp = client
+        .get(&url)
         .bearer_auth(access_token)
-        .send().await
+        .send()
+        .await
         .map_err(|e| format!("Failed to fetch skills: {}", e))?;
     // The ESI response wraps skills in a "skills" array
     #[derive(Deserialize)]
-    struct SkillsWrapper { skills: Vec<Skill> }
-    let wrapper = resp.json::<SkillsWrapper>().await.map_err(|e| format!("Failed to parse skills: {}", e))?;
+    struct SkillsWrapper {
+        skills: Vec<Skill>,
+    }
+    let wrapper = resp
+        .json::<SkillsWrapper>()
+        .await
+        .map_err(|e| format!("Failed to parse skills: {}", e))?;
     Ok(wrapper.skills)
 }
 
@@ -336,14 +360,26 @@ pub fn generate_skill_plan_for_fit(
     // Map user skills for quick lookup
     let mut user_skill_map: HashMap<i64, (String, i32)> = HashMap::new();
     for s in user_skills {
-        user_skill_map.insert(s.skill_id, s.skill_name.clone().unwrap_or_default(), s.active_level);
+        user_skill_map.insert(
+            s.skill_id,
+            s.skill_name.clone().unwrap_or_default(),
+            s.active_level,
+        );
     }
     // Build the plan: (skill_id, skill_name, required_level, current_level)
     let mut plan = vec![];
     for (skill_id, (skill_name, required_level)) in required_skills.iter() {
-        let current_level = user_skill_map.get(skill_id).map(|(_, lvl)| *lvl).unwrap_or(0);
+        let current_level = user_skill_map
+            .get(skill_id)
+            .map(|(_, lvl)| *lvl)
+            .unwrap_or(0);
         if current_level < *required_level {
-            plan.push((*skill_id, skill_name.clone(), *required_level, current_level));
+            plan.push((
+                *skill_id,
+                skill_name.clone(),
+                *required_level,
+                current_level,
+            ));
         }
     }
     // Order: ship skills first (id 333), then others
@@ -395,14 +431,12 @@ pub fn suggest_next_ship_tier(
         _ => ShipTier::Frigate,
     };
     // Find a ship in the next tier
-    let suggested_ship = all_ships.iter().find(|ship| {
-        match next_tier {
-            ShipTier::Destroyer => ship.ship_name.contains("Destroyer"),
-            ShipTier::Cruiser => ship.ship_name.contains("Cruiser"),
-            ShipTier::Battlecruiser => ship.ship_name.contains("Battlecruiser"),
-            ShipTier::Battleship => ship.ship_name.contains("Battleship"),
-            ShipTier::Frigate => ship.ship_name.contains("Frigate"),
-        }
+    let suggested_ship = all_ships.iter().find(|ship| match next_tier {
+        ShipTier::Destroyer => ship.ship_name.contains("Destroyer"),
+        ShipTier::Cruiser => ship.ship_name.contains("Cruiser"),
+        ShipTier::Battlecruiser => ship.ship_name.contains("Battlecruiser"),
+        ShipTier::Battleship => ship.ship_name.contains("Battleship"),
+        ShipTier::Frigate => ship.ship_name.contains("Frigate"),
     });
     if let Some(ship) = suggested_ship {
         // TODO: Lookup required skills for this ship from SDE
@@ -422,7 +456,9 @@ pub fn suggest_next_ship_tier(
 /// - String in EVEMon format: '[Skill Name] Level X' per line
 pub fn export_skill_plan_evemon(plan: &[(i64, String, i32, i32)]) -> String {
     plan.iter()
-        .map(|(_, skill_name, required_level, _)| format!("{} Level {}", skill_name, required_level))
+        .map(|(_, skill_name, required_level, _)| {
+            format!("{} Level {}", skill_name, required_level)
+        })
         .collect::<Vec<_>>()
         .join("\n")
 }
@@ -434,14 +470,21 @@ pub fn refresh_sde() -> Result<(), String> {
     let sde_url = "https://eve-static-data-export.s3-eu-west-1.amazonaws.com/tranquility/sde.zip";
     let sde_path = "data/sde.zip";
     // Download SDE
-    let resp = reqwest::blocking::get(sde_url).map_err(|e| format!("Failed to download SDE: {}", e))?;
-    let bytes = resp.bytes().map_err(|e| format!("Failed to read SDE bytes: {}", e))?;
+    let resp =
+        reqwest::blocking::get(sde_url).map_err(|e| format!("Failed to download SDE: {}", e))?;
+    let bytes = resp
+        .bytes()
+        .map_err(|e| format!("Failed to read SDE bytes: {}", e))?;
     fs::create_dir_all("data").map_err(|e| format!("Failed to create data dir: {}", e))?;
     fs::write(sde_path, &bytes).map_err(|e| format!("Failed to save SDE: {}", e))?;
     // TODO: Unzip and update DB from SDE
     // Update last update timestamp
-    let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
-    fs::write("data/last_sde_update.txt", now.to_string()).map_err(|e| format!("Failed to write timestamp: {}", e))?;
+    let now = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_secs();
+    fs::write("data/last_sde_update.txt", now.to_string())
+        .map_err(|e| format!("Failed to write timestamp: {}", e))?;
     Ok(())
 }
 
@@ -450,7 +493,10 @@ pub fn sde_update_needed() -> bool {
     let path = Path::new("data/last_sde_update.txt");
     if let Ok(contents) = fs::read_to_string(path) {
         if let Ok(last) = contents.parse::<u64>() {
-            let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
+            let now = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_secs();
             return now > last + 24 * 3600;
         }
     }
@@ -459,14 +505,20 @@ pub fn sde_update_needed() -> bool {
 
 /// Check if EULA has been accepted (returns true if accepted)
 pub fn eula_accepted() -> bool {
-    fs::read_to_string("data/eula_accepted.txt").unwrap_or_default().trim() == "yes"
+    fs::read_to_string("data/eula_accepted.txt")
+        .unwrap_or_default()
+        .trim()
+        == "yes"
 }
 
 /// Set EULA acceptance (true/false)
 pub fn set_eula_accepted(accepted: bool) -> Result<(), String> {
     fs::create_dir_all("data").map_err(|e| format!("Failed to create data dir: {}", e))?;
-    fs::write("data/eula_accepted.txt", if accepted { "yes" } else { "no" })
-        .map_err(|e| format!("Failed to write EULA status: {}", e))
+    fs::write(
+        "data/eula_accepted.txt",
+        if accepted { "yes" } else { "no" },
+    )
+    .map_err(|e| format!("Failed to write EULA status: {}", e))
 }
 
 // TODO: Add logic to update the local database with fetched character and skill data

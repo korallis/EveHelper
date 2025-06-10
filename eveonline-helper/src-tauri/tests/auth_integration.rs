@@ -8,8 +8,8 @@
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::esi::{store_tokens, get_tokens};
-    use crate::db::{init_db, create_tables};
+    use crate::db::{create_tables, init_db};
+    use crate::esi::{get_tokens, store_tokens};
     use sqlx::SqlitePool;
     use std::env;
 
@@ -35,10 +35,12 @@ mod tests {
         // Use an in-memory SQLite DB for testing
         let db_path = ":memory:";
         let encryption_key = "test_key";
-        let pool = init_db(db_path, encryption_key).await.expect("Failed to init DB");
+        let pool = init_db(db_path, encryption_key)
+            .await
+            .expect("Failed to init DB");
         let result = create_tables(&pool).await;
         assert!(result.is_ok(), "Failed to create tables");
     }
 
     // TODO: Add async tests for ESI fetch logic using mock HTTP responses
-} 
+}
